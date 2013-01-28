@@ -286,7 +286,7 @@ CFTypeRef SSKeychainAccessibilityType = NULL;
 #if __has_feature(objc_arc)
             message = (__bridge_transfer NSString *)SecCopyErrorMessageString(code, NULL);
 #else
-            message = [(id) SecCopyErrorMessageString(status, NULL) autorelease];
+            message = [(id) SecCopyErrorMessageString(code, NULL) autorelease];
 #endif
     }
 
