@@ -88,7 +88,7 @@ extern NSString *const kSSKeychainWhereKey;
  
  @return An array of dictionaries containing the Keychain's accounts, or `nil` if the Keychain doesn't have any
  accounts. The order of the objects in the array isn't defined.
-  
+ 
  @see allAccounts
  */
 + (NSArray *)allAccounts:(NSError **)error;
@@ -162,7 +162,7 @@ extern NSString *const kSSKeychainWhereKey;
 + (NSString *)passwordForService:(NSString *)serviceName account:(NSString *)account error:(NSError **)error;
 
 /**
- Returns the password data for a given account and service, or `nil` if the Keychain doesn't have data 
+ Returns the password data for a given account and service, or `nil` if the Keychain doesn't have data
  for the given parameters.
  
  @param serviceName The service for which to return the corresponding password.
@@ -179,7 +179,7 @@ extern NSString *const kSSKeychainWhereKey;
 + (NSData *)passwordDataForService:(NSString *)serviceName account:(NSString *)account;
 
 /**
- Returns the password data for a given account and service, or `nil` if the Keychain doesn't have data 
+ Returns the password data for a given account and service, or `nil` if the Keychain doesn't have data
  for the given parameters.
  
  @param serviceName The service for which to return the corresponding password.
@@ -246,7 +246,7 @@ extern NSString *const kSSKeychainWhereKey;
  
  @see setPassword:forService:account:error:
  */
-+ (BOOL)setPassword:(NSString *)password forService:(NSString *)serviceName account:(NSString *)account;
++ (BOOL)setPassword:(NSString *)password forService:(NSString *)serviceName account:(NSString *)account label:(NSString *)lbl;
 
 /**
  Sets a password in the Keychain.
@@ -263,7 +263,7 @@ extern NSString *const kSSKeychainWhereKey;
  
  @see setPassword:forService:account:
  */
-+ (BOOL)setPassword:(NSString *)password forService:(NSString *)serviceName account:(NSString *)account error:(NSError **)error;
++ (BOOL)setPassword:(NSString *)password forService:(NSString *)serviceName account:(NSString *)account label:(NSString *)lbl error:(NSError **)error;
 
 /**
  Sets arbirary data in the Keychain.
@@ -280,7 +280,7 @@ extern NSString *const kSSKeychainWhereKey;
  
  @see setPasswordData:forService:account:error:
  */
-+ (BOOL)setPasswordData:(NSData *)password forService:(NSString *)serviceName account:(NSString *)account;
++ (BOOL)setPasswordData:(NSData *)password forService:(NSString *)serviceName account:(NSString *)account label:(NSString *)lbl;
 
 /**
  Sets arbirary data in the Keychain.
@@ -297,7 +297,7 @@ extern NSString *const kSSKeychainWhereKey;
  
  @see setPasswordData:forService:account:
  */
-+ (BOOL)setPasswordData:(NSData *)password forService:(NSString *)serviceName account:(NSString *)account error:(NSError **)error;
++ (BOOL)setPasswordData:(NSData *)password forService:(NSString *)serviceName account:(NSString *)account label:(NSString *)lbl error:(NSError **)error;
 
 
 ///--------------------

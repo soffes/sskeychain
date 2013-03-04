@@ -12,13 +12,13 @@ NSString *const kSSKeychainErrorDomain = @"com.samsoffes.sskeychain";
 
 NSString *const kSSKeychainAccountKey = @"acct";
 NSString *const kSSKeychainCreatedAtKey = @"cdat";
-NSString *const kSSKeychainClassKey = @"labl";
+NSString *const kSSKeychainClassKey = @"class";
 NSString *const kSSKeychainDescriptionKey = @"desc";
 NSString *const kSSKeychainLabelKey = @"labl";
 NSString *const kSSKeychainLastModifiedKey = @"mdat";
 NSString *const kSSKeychainWhereKey = @"svce";
 
-#if __IPHONE_4_0 && TARGET_OS_IPHONE  
+#if __IPHONE_4_0 && TARGET_OS_IPHONE
 CFTypeRef SSKeychainAccessibilityType = NULL;
 #endif
 
@@ -111,7 +111,7 @@ CFTypeRef SSKeychainAccessibilityType = NULL;
 		return nil;
 	}
 	
-	CFTypeRef result = NULL;	
+	CFTypeRef result = NULL;
 	NSMutableDictionary *query = [self _queryForService:service account:account];
 #if __has_feature(objc_arc)
 	[query setObject:(__bridge id)kCFBooleanTrue forKey:(__bridge id)kSecReturnData];
@@ -153,13 +153,13 @@ CFTypeRef SSKeychainAccessibilityType = NULL;
 		status = SecItemDelete((CFDictionaryRef)query);
 #else
         CFTypeRef result;
-    #if __has_feature(objc_arc)
+#if __has_feature(objc_arc)
         [query setObject:(__bridge id)kCFBooleanTrue forKey:(__bridge id)kSecReturnRef];
         status = SecItemCopyMatching((__bridge CFDictionaryRef)query, &result);
-    #else
+#else
         [query setObject:(id)kCFBooleanTrue forKey:(id)kSecReturnRef];
         status = SecItemCopyMatching((CFDictionaryRef)query, &result);
-    #endif
+#endif
         if (errSecSuccess == status) {
             status = SecKeychainItemDelete((SecKeychainItemRef) result);
             CFRelease(result);
@@ -176,23 +176,23 @@ CFTypeRef SSKeychainAccessibilityType = NULL;
 
 #pragma mark - Setting Passwords
 
-+ (BOOL)setPassword:(NSString *)password forService:(NSString *)service account:(NSString *)account {
-	return [self setPassword:password forService:service account:account error:nil];
++ (BOOL)setPassword:(NSString *)password forService:(NSString *)service account:(NSString *)account label:(NSString *)lbl {
+	return [self setPassword:password forService:service account:account label:lbl error:nil];
 }
 
 
-+ (BOOL)setPassword:(NSString *)password forService:(NSString *)service account:(NSString *)account error:(NSError **)error {
++ (BOOL)setPassword:(NSString *)password forService:(NSString *)service account:(NSString *)account label:(NSString *)lbl error:(NSError **)error {
     NSData *data = [password dataUsingEncoding:NSUTF8StringEncoding];
-    return [self setPasswordData:data forService:service account:account error:error];
+    return [self setPasswordData:data forService:service account:account label:lbl error:error];
 }
 
 
-+ (BOOL)setPasswordData:(NSData *)password forService:(NSString *)service account:(NSString *)account {
-    return [self setPasswordData:password forService:service account:account error:nil];
++ (BOOL)setPasswordData:(NSData *)password forService:(NSString *)service account:(NSString *)account label:(NSString *)lbl {
+    return [self setPasswordData:password forService:service account:account label:lbl error:nil];
 }
 
 
-+ (BOOL)setPasswordData:(NSData *)password forService:(NSString *)service account:(NSString *)account error:(NSError **)error {
++ (BOOL)setPasswordData:(NSData *)password forService:(NSString *)service account:(NSString *)account label:(NSString *)lbl error:(NSError **)error {
     OSStatus status = SSKeychainErrorBadArguments;
 	if (password && service && account) {
         [self deletePasswordForService:service account:account];
@@ -202,7 +202,15 @@ CFTypeRef SSKeychainAccessibilityType = NULL;
 #else
 		[query setObject:password forKey:(id)kSecValueData];
 #endif
-		
+        
+		if (lbl) {
+#if __has_feature(objc_arc)
+			[query setObject:lbl forKey:(__bridge id)kSecAttrLabel];
+#else
+			[query setObject:lbl forKey:(id)kSecAttrLabel];
+#endif
+		}
+        
 #if __IPHONE_4_0 && TARGET_OS_IPHONE
 		if (SSKeychainAccessibilityType) {
 #if __has_feature(objc_arc)
@@ -228,7 +236,7 @@ CFTypeRef SSKeychainAccessibilityType = NULL;
 
 #pragma mark - Configuration
 
-#if __IPHONE_4_0 && TARGET_OS_IPHONE 
+#if __IPHONE_4_0 && TARGET_OS_IPHONE
 + (CFTypeRef)accessibilityType {
 	return SSKeychainAccessibilityType;
 }
@@ -279,7 +287,7 @@ CFTypeRef SSKeychainAccessibilityType = NULL;
     switch (code) {
         case errSecSuccess: return nil;
         case SSKeychainErrorBadArguments: message = @"Some of the arguments were invalid"; break;
-          
+            
 #if TARGET_OS_IPHONE
         case errSecUnimplemented: message = @"Function or operation not implemented"; break;
         case errSecParam: message = @"One or more parameters passed to a function were not valid"; break;
