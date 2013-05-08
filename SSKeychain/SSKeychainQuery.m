@@ -156,7 +156,7 @@
         [dictionary setObject:self.account forKey:(__bridge id)kSecAttrAccount];
     }
     
-#if __IPHONE_3_0 && TARGET_OS_IPHONE
+#if __IPHONE_3_0 && TARGET_OS_IPHONE && TARGET_IPHONE_SIMULATOR
     if (self.accessGroup) {
         [dictionary setObject:self.accessGroup forKey:(__bridge id)kSecAttrAccessGroup];
     }
