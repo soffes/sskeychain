@@ -9,5 +9,7 @@ Pod::Spec.new do |s|
   s.source_files = 'SSKeychain/*.{h,m}'
   s.frameworks   = 'Security'
   s.requires_arc = true
+  s.ios.deployment_target = '6.0'
+  s.osx.deployment_target = '10.8'
   s.license      = { :type => 'MIT', :file => 'LICENSE' }
 end
