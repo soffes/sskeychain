@@ -9,10 +9,26 @@
 #import <Foundation/Foundation.h>
 #import <Security/Security.h>
 
-#if __IPHONE_OS_VERSION_MIN_REQUIRED >= __IPHONE_6_0
- #define kCodingProtocol NSSecureCoding
+#if TARGET_OS_IPHONE 
+
+  #if __IPHONE_OS_VERSION_MIN_REQUIRED >= __IPHONE_6_0
+
+    #define kCodingProtocol NSSecureCoding
+  #else
+
+   #define kCodingProtocol NSCoding
+  #endif
+
 #else
- #define kCodingProtocol NSCoding
+
+  #if __MAC_OS_X_VERSION_MIN_REQUIRED >= __MAC_10_8
+
+    #define kCodingProtocol NSSecureCoding
+  #else
+
+    #define kCodingProtocol NSCoding
+ #endif
+
 #endif
 
 /**
