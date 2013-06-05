@@ -9,6 +9,12 @@
 #import <Foundation/Foundation.h>
 #import <Security/Security.h>
 
+#if __IPHONE_OS_VERSION_MIN_REQUIRED >= __IPHONE_6_0
+ #define kCodingProtocol NSSecureCoding
+#else
+ #define kCodingProtocol NSCoding
+#endif
+
 /**
  Simple interface for querying or modifying keychain items.
  */
@@ -35,7 +41,7 @@
  This property automatically transitions between an object and the value of 
  `passwordData` using NSKeyedArchiver and NSKeyedUnarchiver.
  */
-@property (nonatomic, copy) id<NSSecureCoding> passwordObject;
+@property (nonatomic, copy) id<kCodingProtocol> passwordObject;
 
 /**
  Convenience accessor for setting and getting a password string. Passes through
