@@ -26,7 +26,7 @@
 
 #pragma mark - Public
 
-- (BOOL)save:(NSError *__autoreleasing *)error {
+- (BOOL)saveItem:(NSError *__autoreleasing *)error {
     OSStatus status = SSKeychainErrorBadArguments;
     if (!self.service || !self.account || !self.passwordData) {
 		if (error) {
@@ -35,7 +35,7 @@
 		return NO;
 	}
 
-    [self deleteItem:nil];
+    [self deleteItems:nil];
 
     NSMutableDictionary *query = [self query];
     [query setObject:self.passwordData forKey:(__bridge id)kSecValueData];
@@ -58,14 +58,8 @@
 }
 
 
-- (BOOL)deleteItem:(NSError *__autoreleasing *)error {
-    OSStatus status = SSKeychainErrorBadArguments;
-    if (!self.service || !self.account) {
-		if (error) {
-			*error = [[self class] errorWithCode:status];
-		}
-		return NO;
-	}
+- (BOOL)deleteItems:(NSError *__autoreleasing *)error {
+    OSStatus status = errSecSuccess;
 
     NSMutableDictionary *query = [self query];
 #if TARGET_OS_IPHONE
@@ -88,7 +82,7 @@
 }
 
 
-- (NSArray *)fetchAll:(NSError *__autoreleasing *)error {
+- (NSArray *)fetchItems:(NSError *__autoreleasing *)error {
     OSStatus status = SSKeychainErrorBadArguments;
     NSMutableDictionary *query = [self query];
     [query setObject:@YES forKey:(__bridge id)kSecReturnAttributes];
@@ -105,7 +99,7 @@
 }
 
 
-- (BOOL)fetch:(NSError *__autoreleasing *)error {
+- (BOOL)fetchSingleItem:(NSError *__autoreleasing *)error {
     OSStatus status = SSKeychainErrorBadArguments;
 	if (!self.service || !self.account) {
 		if (error) {
