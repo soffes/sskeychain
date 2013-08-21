@@ -34,13 +34,13 @@ static NSString *kSSToolkitTestsLabel = @"SSToolkitLabel";
     query.service = kSSToolkitTestsServiceName;
     query.account = kSSToolkitTestsAccountName;
     query.label = kSSToolkitTestsLabel;
-    STAssertTrue([query save:&error], @"Unable to save item: %@", error);
+    STAssertTrue([query saveItem:&error], @"Unable to save item: %@", error);
     
     // check password
     query = [[SSKeychainQuery alloc] init];
     query.service = kSSToolkitTestsServiceName;
     query.account = kSSToolkitTestsAccountName;
-    STAssertTrue([query fetch:&error], @"Unable to fetch keychain item: %@", error);
+    STAssertTrue([query fetchSingleItem:&error], @"Unable to fetch keychain item: %@", error);
     STAssertEqualObjects(query.password, kSSToolkitTestsPassword, @"Passwords were not equal");
     
     // set password to a dictionary
@@ -49,24 +49,24 @@ static NSString *kSSToolkitTestsLabel = @"SSToolkitLabel";
                                 @"4 8 15 16 23 42", @"string",
                                 nil];
     query.passwordObject = dictionary;
-    STAssertTrue([query save:&error], @"Unable to save item: %@", error);
+    STAssertTrue([query saveItem:&error], @"Unable to save item: %@", error);
     
     // check password
     query = [[SSKeychainQuery alloc] init];
     query.service = kSSToolkitTestsServiceName;
     query.account = kSSToolkitTestsAccountName;
-    STAssertTrue([query fetch:&error], @"Unable to fetch keychain item: %@", error);
+    STAssertTrue([query fetchSingleItem:&error], @"Unable to fetch keychain item: %@", error);
     STAssertEqualObjects(query.passwordObject, dictionary, @"Passwords were not equal");
     
     // check all accounts
     query = [[SSKeychainQuery alloc] init];
-    accounts = [query fetchAll:&error];
+    accounts = [query fetchItems:&error];
     STAssertNotNil(accounts, @"Unable to fetch accounts: %@", error);
     STAssertTrue([self _accounts:accounts containsAccountWithName:kSSToolkitTestsAccountName], @"Matching account was not returned");
     
     // check accounts for service
     query.service = kSSToolkitTestsServiceName;
-    accounts = [query fetchAll:&error];
+    accounts = [query fetchItems:&error];
     STAssertNotNil(accounts, @"Unable to fetch accounts: %@", error);
     STAssertTrue([self _accounts:accounts containsAccountWithName:kSSToolkitTestsAccountName], @"Matching account was not returned");
     
@@ -74,41 +74,41 @@ static NSString *kSSToolkitTestsLabel = @"SSToolkitLabel";
     query = [[SSKeychainQuery alloc] init];
     query.service = kSSToolkitTestsServiceName;
     query.account = kSSToolkitTestsAccountName;
-    STAssertTrue([query deleteItem:&error], @"Unable to delete password: %@", error);
+    STAssertTrue([query deleteItems:&error], @"Unable to delete password: %@", error);
     
     // check if saving with missing informations is handled correctly
     query = [[SSKeychainQuery alloc] init];
     query.service = kSSToolkitTestsServiceName;
     query.account = kSSToolkitTestsAccountName;
-    STAssertFalse([query save:&error], @"Function should return NO as not all needed information is provided: %@", error);
+    STAssertFalse([query saveItem:&error], @"Function should return NO as not all needed information is provided: %@", error);
     
     query = [[SSKeychainQuery alloc] init];
     query.password = kSSToolkitTestsPassword;
     query.account = kSSToolkitTestsAccountName;
-    STAssertFalse([query save:&error], @"Function should return NO as not all needed information is provided: %@", error);
+    STAssertFalse([query saveItem:&error], @"Function should return NO as not all needed information is provided: %@", error);
 
     query = [[SSKeychainQuery alloc] init];
     query.password = kSSToolkitTestsPassword;
     query.service = kSSToolkitTestsServiceName;
-    STAssertFalse([query save:&error], @"Function save should return NO if not all needed information is provided: %@", error);
+    STAssertFalse([query saveItem:&error], @"Function save should return NO if not all needed information is provided: %@", error);
     
     // check if deletion with missing information is handled correctly
     query = [[SSKeychainQuery alloc] init];
     query.account = kSSToolkitTestsAccountName;
-    STAssertFalse([query deleteItem:&error], @"Function deleteItem should return NO if not all needed information is provided: %@", error);
+    STAssertFalse([query deleteItems:&error], @"Function deleteItem should return NO if not all needed information is provided: %@", error);
 
     query = [[SSKeychainQuery alloc] init];
     query.service = kSSToolkitTestsServiceName;
-    STAssertFalse([query deleteItem:&error], @"Function deleteItem should return NO if not all needed information is provided: %@", error);
+    STAssertFalse([query deleteItems:&error], @"Function deleteItem should return NO if not all needed information is provided: %@", error);
     
     // check if fetch handels missing information correctly
     query = [[SSKeychainQuery alloc] init];
     query.account = kSSToolkitTestsAccountName;
-    STAssertFalse([query fetch:&error], @"Function fetch should return NO if not all needed information is provided: %@", error);
+    STAssertFalse([query fetchSingleItem:&error], @"Function fetch should return NO if not all needed information is provided: %@", error);
     
     query = [[SSKeychainQuery alloc] init];
     query.service = kSSToolkitTestsServiceName;
-    STAssertFalse([query fetch:&error], @"Function fetch should return NO if not all needed information is provided: %@", error);
+    STAssertFalse([query fetchSingleItem:&error], @"Function fetch should return NO if not all needed information is provided: %@", error);
 }
 
 - (void)testSSKeychain {

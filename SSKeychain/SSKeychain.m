@@ -32,7 +32,7 @@ NSString *const kSSKeychainWhereKey = @"svce";
     SSKeychainQuery *query = [[SSKeychainQuery alloc] init];
     query.service = serviceName;
     query.account = account;
-    [query fetch:error];
+    [query fetchSingleItem:error];
     return query.password;
 }
 
@@ -46,7 +46,7 @@ NSString *const kSSKeychainWhereKey = @"svce";
     SSKeychainQuery *query = [[SSKeychainQuery alloc] init];
     query.service = serviceName;
     query.account = account;
-    return [query deleteItem:error];
+    return [query deleteItems:error];
 }
 
 
@@ -60,7 +60,7 @@ NSString *const kSSKeychainWhereKey = @"svce";
     query.service = serviceName;
     query.account = account;
     query.password = password;
-    return [query save:error];
+    return [query saveItem:error];
 }
 
 
@@ -72,7 +72,7 @@ NSString *const kSSKeychainWhereKey = @"svce";
 + (NSArray *)accountsForService:(NSString *)serviceName {
     SSKeychainQuery *query = [[SSKeychainQuery alloc] init];
     query.service = serviceName;
-    return [query fetchAll:nil];
+    return [query fetchItems:nil];
 }
 
 

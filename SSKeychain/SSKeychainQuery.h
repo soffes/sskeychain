@@ -64,16 +64,16 @@
 
  @return `YES` if saving was successful, `NO` otherwise.
  */
-- (BOOL)save:(NSError **)error;
+- (BOOL)saveItem:(NSError **)error;
 
 /**
- Dete keychain items that match the given account, service, and access group.
+ Delete all keychain items that match the given account, service, and access group.
 
  @param error Populated should an error occur.
 
  @return `YES` if saving was successful, `NO` otherwise.
  */
-- (BOOL)deleteItem:(NSError **)error;
+- (BOOL)deleteItems:(NSError **)error;
 
 /**
  Fetch all keychain items that match the given account, service, and access
@@ -85,10 +85,10 @@
  `nil` should an error occur.
  The order of the items is not determined.
  */
-- (NSArray *)fetchAll:(NSError **)error;
+- (NSArray *)fetchItems:(NSError **)error;
 
 /**
- Fetch the keychain item that matches the given account, service, and access
+ Fetch first keychain item that matches the given account, service, and access
  group. The `password` and `passwordData` properties will be populated unless
  an error occurs. The values of `password` and `passwordData` are ignored when
  fetching.
@@ -97,6 +97,6 @@
 
  @return `YES` if fetching was successful, `NO` otherwise.
  */
-- (BOOL)fetch:(NSError **)error;
+- (BOOL)fetchSingleItem:(NSError **)error;
 
 @end
