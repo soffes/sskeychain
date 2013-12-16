@@ -9,6 +9,7 @@
 #import "SSKeychain.h"
 
 NSString *const kSSKeychainErrorDomain = @"com.samsoffes.sskeychain";
+NSString *const kSSDefaultKeychain = @"com.samsoffes.sskeychain.default.keychain";
 NSString *const kSSKeychainAccountKey = @"acct";
 NSString *const kSSKeychainCreatedAtKey = @"cdat";
 NSString *const kSSKeychainClassKey = @"labl";
@@ -74,6 +75,28 @@ NSString *const kSSKeychainWhereKey = @"svce";
     query.service = serviceName;
     return [query fetchAll:nil];
 }
+
+#if !TARGET_OS_IPHONE
++ (BOOL)changeDefaultKeychainPassword:(NSString *)currentPassword to:(NSString *)newPassword{
+    return [self changeDefaultKeychainPassword:currentPassword to:newPassword error:nil];
+}
+
++ (BOOL)changeDefaultKeychainPassword:(NSString *)currentPassword to:(NSString *)newPassword error:(NSError *__autoreleasing *)error{
+    return [self changePasswordForKeychain:kSSDefaultKeychain from:currentPassword to:newPassword error:error];
+}
+
++ (BOOL)changePasswordForKeychain:(NSString *)keychain from:(NSString *)currentPassword to:(NSString *)newPassword{
+    return [self changePasswordForKeychain:keychain from:currentPassword to:newPassword error:nil];
+}
+
++ (BOOL)changePasswordForKeychain:(NSString *)keychain from:(NSString *)currentPassword to:(NSString *)newPassword error:(NSError *__autoreleasing *)error{
+    SSKeychainQuery *query = [[SSKeychainQuery alloc] init];
+    query.keychain = keychain;
+    query.keychainPassword = currentPassword;
+    query.keychainPasswordNew = newPassword;
+    return [query changeKeychainPassword:error];
+}
+#endif
 
 
 #if __IPHONE_4_0 && TARGET_OS_IPHONE
