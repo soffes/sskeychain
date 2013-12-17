@@ -142,6 +142,10 @@
 }
 
 - (BOOL)changeKeychainPassword:(NSError *__autoreleasing *)error{
+    /** Much of this was extracted from the keychain_set_settings.c
+     http://www.opensource.apple.com/source/SecurityTool/SecurityTool-55115/
+    */
+    
     OSStatus status = SSKeychainErrorBadArguments;
     
     if (!self.keychainPasswordNew || !self.keychainPassword ||!self.keychain) {
@@ -277,6 +281,10 @@
 #if !TARGET_OS_IPHONE
 - (SecKeychainRef)openKeychain:(NSError *__autoreleasing *)error
 {
+    /** Much of this was extracted from keychain_utilities.c
+     http://www.opensource.apple.com/source/SecurityTool/SecurityTool-55115/
+    */
+    
     OSStatus status;
     SecKeychainRef keychain = NULL;
     
