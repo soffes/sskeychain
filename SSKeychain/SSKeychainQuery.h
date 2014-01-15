@@ -20,9 +20,9 @@
 #ifdef SSKEYCHAIN_SYNCHRONIZABLE_AVAILABLE
 typedef enum {
   
+  SSKeychainQuerySynchronizationModeAny,
   SSKeychainQuerySynchronizationModeNo,
 	SSKeychainQuerySynchronizationModeYes,
-  SSKeychainQuerySynchronizationModeAny,
   
 } SSKeychainQuerySynchronizationMode;
 #endif

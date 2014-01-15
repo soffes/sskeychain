@@ -163,6 +163,27 @@ static NSString *kSSToolkitTestsLabel = @"SSToolkitLabel";
 #endif
 }
 
+- (void)testSSKeychainWithSync {
+    SSKeychainQuery *query = nil;
+    NSError *error = nil;
+    
+    // create a new keychain item with a synced password
+    query = [[SSKeychainQuery alloc] init];
+    query.password = kSSToolkitTestsPassword;
+    query.service = kSSToolkitTestsServiceName;
+    query.account = kSSToolkitTestsAccountName;
+    query.label = kSSToolkitTestsLabel;
+    query.synchronizationMode = SSKeychainQuerySynchronizationModeYes;
+    XCTAssertTrue([query save:&error], @"Unable to save item: %@", error);
+    
+    // check all accounts
+    XCTAssertTrue([self _accounts:[SSKeychain allAccounts] containsAccountWithName:kSSToolkitTestsAccountName], @"Matching account was not returned");
+    // check account
+    XCTAssertTrue([self _accounts:[SSKeychain accountsForService:kSSToolkitTestsServiceName] containsAccountWithName:kSSToolkitTestsAccountName], @"Matching account was not returned");
+    // delete password
+    XCTAssertTrue([SSKeychain deletePasswordForService:kSSToolkitTestsServiceName account:kSSToolkitTestsAccountName error:&error], @"Unable to delete password: %@", error);
+}
+
 
 #pragma mark - Private
 
