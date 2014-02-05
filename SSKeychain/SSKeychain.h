@@ -20,8 +20,30 @@ typedef enum {
 
 } SSKeychainErrorCode;
 
+
+/**
+Defines constants for the keychain preference domains.
+Internalizes the supported values from SecPreferencesDomain
+in SecKeychain.h
+*/
+typedef enum {
+ 
+	/** Indicates the user preference domain preferences. */
+	kSSKeychainUserDomain = kSecPreferencesDomainUser,
+    
+    /** Indicates the system preference domain preferences. */
+    kSSKeychainSystemDomain = kSecPreferencesDomainSystem,
+    
+    /** Indicates Indicates a dynamic search list.  */
+	kSSKeychainDynamicDomain = kSecPreferencesDomainDynamic,
+    
+} SSKeychainDomains;
+
 /** SSKeychain error domain */
 extern NSString *const kSSKeychainErrorDomain;
+
+/** String passed to SSKeychainQuery to indicate Default Keychain */
+extern NSString *const kSSDefaultKeychain;
 
 /** Account name. */
 extern NSString *const kSSKeychainAccountKey;
@@ -130,6 +152,37 @@ extern NSString *const kSSKeychainWhereKey;
  doesn't have any accounts for the given `serviceName`. The order of the objects in the array isn't defined.
  */
 + (NSArray *)accountsForService:(NSString *)serviceName;
+
+#if !TARGET_OS_IPHONE
+/**
+ Change the password for the Default User Keychain in OS X
+ 
+ @param currentPassword
+ 
+ @param newPassword
+ 
+ @return returns YES if the password was successfully updated, NO otherwise
+ 
+ */
++ (BOOL)changeDefaultKeychainPassword:(NSString*)currentPassword to:(NSString*)newPassword;
++ (BOOL)changeDefaultKeychainPassword:(NSString*)currentPassword to:(NSString*)newPassword error:(NSError**)error;
+
+/**
+ Change the password for the specified Keyhain in OS X
+ 
+ @param keychain The name of the keychain. Specify either full path, or name, of the Keychain.
+ 
+ @param currentPassword
+ 
+ @param newPassword
+ 
+ @return returns YES if the password was successfully updated, NO otherwise
+ 
+ */
++ (BOOL)changePasswordForKeychain:(NSString*)keychain from:(NSString*)currentPassword to:(NSString*)newPassword;
++ (BOOL)changePasswordForKeychain:(NSString*)keychain from:(NSString*)currentPassword to:(NSString*)newPassword error:(NSError**)error;
+
+#endif
 
 
 #pragma mark - Configuration

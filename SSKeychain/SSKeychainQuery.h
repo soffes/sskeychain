@@ -66,6 +66,32 @@ typedef enum {
  */
 @property (nonatomic, copy) NSString *password;
 
+
+#if !TARGET_OS_IPHONE
+/** 
+Name of Keychain or Full Path to Keychain;
+*/
+@property (nonatomic, copy) NSString* keychain;
+
+/**
+ Convenience accessor for changing the Keychain password.
+ This is the Keychain's current password
+ */
+@property (nonatomic, copy) NSString *keychainPassword;
+
+/**
+ Convenience accessor for changing the Keychain password.
+ This is what the Keychain's pasword will be changed to.
+*/
+@property (nonatomic, copy) NSString *keychainPasswordNew;
+
+/**
+ value representing the Preference Domain of the Keychain.
+ specify SSKeychainUserDomain,SSKeychainSystemDomain, or SSKeychainDynamicDomain
+ */
+@property int keychainPreferenceDomain;
+#endif
+
 /**
  Save the receiver's attributes as a keychain item. Existing items with the
  given account, service, and access group will first be deleted.
@@ -109,4 +135,12 @@ typedef enum {
  */
 - (BOOL)fetch:(NSError **)error;
 
+/**
+ Change the current keychain password.
+ 
+ @param error Populated should an error occur.
+ 
+ @return `YES` if keychain password was changed, `NO` otherwise.
+ */
+- (BOOL)changeKeychainPassword:(NSError **)error;
 @end

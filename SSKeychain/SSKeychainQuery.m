@@ -15,6 +15,10 @@
 @synthesize service = _service;
 @synthesize label = _label;
 @synthesize passwordData = _passwordData;
+@synthesize keychainPassword = _keychainPassword;
+@synthesize keychainPasswordNew = _keychainPasswordNew;
+@synthesize keychain = _keychain;
+@synthesize keychainPreferenceDomain = _keychainPreferenceDomain;
 
 #if __IPHONE_3_0 && TARGET_OS_IPHONE
 @synthesize accessGroup = _accessGroup;
@@ -37,7 +41,9 @@
 
     [self deleteItem:nil];
 
-    NSMutableDictionary *query = [self query];
+    NSMutableDictionary *query = [self query:error];
+    if(!query)return NO;
+
     [query setObject:self.passwordData forKey:(__bridge id)kSecValueData];
     if (self.label) {
         [query setObject:self.label forKey:(__bridge id)kSecAttrLabel];
@@ -67,7 +73,9 @@
 		return NO;
 	}
 
-    NSMutableDictionary *query = [self query];
+    NSMutableDictionary *query = [self query:error];
+    if(!query)return NO;
+
 #if TARGET_OS_IPHONE
     status = SecItemDelete((__bridge CFDictionaryRef)query);
 #else
@@ -90,7 +98,9 @@
 
 - (NSArray *)fetchAll:(NSError *__autoreleasing *)error {
     OSStatus status = SSKeychainErrorBadArguments;
-    NSMutableDictionary *query = [self query];
+    NSMutableDictionary *query = [self query:error];
+    if(!query)return NO;
+
     [query setObject:@YES forKey:(__bridge id)kSecReturnAttributes];
     [query setObject:(__bridge id)kSecMatchLimitAll forKey:(__bridge id)kSecMatchLimit];
 
@@ -115,7 +125,9 @@
 	}
 
 	CFTypeRef result = NULL;
-	NSMutableDictionary *query = [self query];
+	NSMutableDictionary *query = [self query:error];
+    if(!query)return NO;
+
     [query setObject:@YES forKey:(__bridge id)kSecReturnData];
     [query setObject:(__bridge id)kSecMatchLimitOne forKey:(__bridge id)kSecMatchLimit];
     status = SecItemCopyMatching((__bridge CFDictionaryRef)query, &result);
@@ -129,6 +141,53 @@
     return YES;
 }
 
+- (BOOL)changeKeychainPassword:(NSError *__autoreleasing *)error{
+    /** Much of this was extracted from the keychain_set_settings.c
+     http://www.opensource.apple.com/source/SecurityTool/SecurityTool-55115/
+    */
+    
+    OSStatus status = SSKeychainErrorBadArguments;
+    
+    if (!self.keychainPasswordNew || !self.keychainPassword ||!self.keychain) {
+		if (error) {
+			*error = [[self class] errorWithCode:status];
+		}
+        return NO;
+	}
+    
+    SecKeychainRef keychain = NULL;
+    
+	UInt32 currentPasswordLength = (self.keychainPassword) ? (int)[self.keychainPassword length] : 0;
+	char *currentPassword = (self.keychainPassword) ? (char*)self.keychainPassword.UTF8String : NULL;
+
+    UInt32 newPasswordLength = (self.keychainPasswordNew) ? (int)[self.keychainPasswordNew length] : 0;
+    char *newPassword = (self.keychainPasswordNew) ? (char*)self.keychainPasswordNew.UTF8String : NULL;
+    
+    keychain = [self openKeychain:error];
+    if (!keychain)
+    {
+        return NO;
+    }
+	
+	(void)SecKeychainLock(keychain);
+
+// SecKeychainChangePassword is from Apple's Private reseve <Security/SecKeychainPriv.h>
+// so we'll silence the warning here.
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wimplicit-function-declaration"
+    status = SecKeychainChangePassword(keychain, currentPasswordLength, currentPassword, newPasswordLength, newPassword);
+#pragma clang diagnostic pop
+
+    if (status != errSecSuccess)
+	{
+        if(error)*error = [[self class] errorWithCode:status];
+        if (keychain)CFRelease(keychain);
+        return NO;
+    }
+    
+	if (keychain)CFRelease(keychain);
+	return YES;
+}
 
 #pragma mark - Accessors
 
@@ -160,7 +219,7 @@
 
 #pragma mark - Private
 
-- (NSMutableDictionary *)query {
+- (NSMutableDictionary *)query:(NSError *__autoreleasing *)error{
     NSMutableDictionary *dictionary = [NSMutableDictionary dictionaryWithCapacity:3];
     [dictionary setObject:(__bridge id)kSecClassGenericPassword forKey:(__bridge id)kSecClass];
 
@@ -171,6 +230,21 @@
     if (self.account) {
         [dictionary setObject:self.account forKey:(__bridge id)kSecAttrAccount];
     }
+    
+#if !TARGET_OS_IPHONE
+    if (self.keychain){
+        SecKeychainRef keychain = [self openKeychain:error];
+        if(keychain){
+            [dictionary setObject:(__bridge id)(keychain) forKey:(__bridge id)kSecUseKeychain];
+            CFRelease(keychain);
+        }else{
+            return NULL;
+        }
+        
+}
+        
+
+#endif
 
 #if __IPHONE_3_0 && TARGET_OS_IPHONE
 #if !(TARGET_IPHONE_SIMULATOR)
@@ -203,6 +277,79 @@
 
     return dictionary;
 }
+
+#if !TARGET_OS_IPHONE
+- (SecKeychainRef)openKeychain:(NSError *__autoreleasing *)error
+{
+    /** Much of this was extracted from keychain_utilities.c
+     http://www.opensource.apple.com/source/SecurityTool/SecurityTool-55115/
+    */
+    
+    OSStatus status;
+    SecKeychainRef keychain = NULL;
+    
+    // if unspecified we'll set to the user domain
+    if(!self.keychainPreferenceDomain)
+        self.keychainPreferenceDomain = kSSKeychainUserDomain;
+
+    if ([self.keychain isEqualToString:kSSDefaultKeychain]) {
+        status = SecKeychainCopyDomainDefault(self.keychainPreferenceDomain, &keychain);
+        if (status != errSecSuccess)
+		{
+            if(error)*error = [[self class] errorWithCode:status];
+			return NULL;
+		}else{
+            CFRetain(keychain);
+            return keychain;
+        }
+    }
+    else if (self.keychain.UTF8String && self.keychain.UTF8String[0] != '/')
+	{
+		CFArrayRef dynamic = NULL;
+		status = SecKeychainCopyDomainSearchList(self.keychainPreferenceDomain, &dynamic);
+		if (status != errSecSuccess)
+		{
+            if(error)*error = [[self class] errorWithCode:status];
+			return NULL;
+		}
+        
+		else
+		{
+			uint32_t i;
+			uint32_t count = dynamic ? (int)CFArrayGetCount(dynamic) : 0;
+            
+			for (i = 0; i < count; ++i)
+			{
+				char pathName[MAXPATHLEN];
+				UInt32 ioPathLength = sizeof(pathName);
+				bzero(pathName, ioPathLength);
+				keychain = (SecKeychainRef)CFArrayGetValueAtIndex(dynamic, i);
+				status = SecKeychainGetPath(keychain, &ioPathLength, pathName);
+                if (status)
+				{
+                    if(error)*error = [[self class] errorWithCode:status];
+					return NULL;
+				}
+                
+                NSString* keyChainFile = [[[NSString stringWithUTF8String:pathName] lastPathComponent] stringByDeletingPathExtension];
+				if ([keyChainFile isEqualToString:self.keychain]){
+                    CFRetain(keychain);
+					CFRelease(dynamic);
+					return keychain;
+				}
+			}
+			if(dynamic)CFRelease(dynamic);
+		}
+	}
+
+	status = SecKeychainOpen(self.keychain.UTF8String, &keychain);
+	if (status != errSecSuccess)
+	{
+		if(error)*error = [[self class] errorWithCode:status];
+	}
+	return keychain;
+}
+#endif
 
 
 + (NSError *)errorWithCode:(OSStatus) code {

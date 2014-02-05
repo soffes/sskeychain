@@ -38,6 +38,16 @@
                ReferencedContainer = "container:SSKeychain.xcodeproj">
             </BuildableReference>
          </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "BE52CAC1185E5D5E00A20C70"
+               BuildableName = "SSkeychain-OSXTests.xctest"
+               BlueprintName = "SSkeychain-OSXTests"
+               ReferencedContainer = "container:SSKeychain.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
       <MacroExpansion>
          <BuildableReference

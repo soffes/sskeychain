@@ -29,6 +29,9 @@ SSKeychain has the following class methods for working with the system keychain:
 + (NSString *)passwordForService:(NSString *)serviceName account:(NSString *)account;
 + (BOOL)deletePasswordForService:(NSString *)serviceName account:(NSString *)account;
 + (BOOL)setPassword:(NSString *)password forService:(NSString *)serviceName account:(NSString *)account;
++ (BOOL)changeDefaultKeychainPassword:(NSString*)currentPassword to:(NSString*)newPassword;
++ (BOOL)changePasswordForKeychain:(NSString*)keychain from:(NSString*)currentPassword to:(NSString*)newPassword;
+
 ```
 
 Easy as that. (See [SSKeychain.h](https://github.com/soffes/sskeychain/blob/master/SSKeychain/SSKeychain.h) and [SSKeychainQuery.h](https://github.com/soffes/sskeychain/blob/master/SSKeychain/SSKeychainQuery.h) for all of the methods.)
