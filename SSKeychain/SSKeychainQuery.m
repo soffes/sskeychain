@@ -17,15 +17,47 @@
 @synthesize label = _label;
 @synthesize passwordData = _passwordData;
 
-#if __IPHONE_3_0 && TARGET_OS_IPHONE
-@synthesize accessGroup = _accessGroup;
-#endif
+NS_INLINE NSString* ss_ios_sys_version() {
+    static dispatch_once_t onceToken;
+    static NSString *shared  = nil;
+    dispatch_once(&onceToken, ^{
+        shared = [[UIDevice currentDevice] systemVersion];
+    });
+    return shared;
+}
 
-#ifdef SSKEYCHAIN_SYNCHRONIZABLE_AVAILABLE
+NS_INLINE BOOL ss_ios_version_lt(NSString* v) {
+    static dispatch_once_t onceToken;
+    static BOOL shared = NO;
+    dispatch_once(&onceToken, ^{
+        shared = [ss_ios_sys_version() compare:v options:NSNumericSearch] == NSOrderedAscending;
+    });
+    return shared;
+}
+
 @synthesize synchronizationMode = _synchronizationMode;
-#endif
 
 #pragma mark - Public
+
+- (id) init {
+    self = [super init];
+    if (self) {
+        // no fix for MacOS < 10.9
+        if (ss_ios_version_lt(@"7.0")) {
+            _synchronizationMode = SSKeychainQuerySynchronizationModeNotAvailable;
+        }
+    }
+    return self;
+}
+
+- (void) setSynchronizationMode:(SSKeychainQuerySynchronizationMode) synchronizationMode {
+    // protect the user from themselves
+    // throw an exception?  i think not.
+    // log it?  maybe.
+    // silently ignore?  i don't like this either.
+    if (ss_ios_version_lt(@"7.0")) {  return;  }
+    _synchronizationMode = synchronizationMode;
+}
 
 - (BOOL)save:(NSError *__autoreleasing *)error {
     OSStatus status = SSKeychainErrorBadArguments;
@@ -181,24 +213,28 @@
 #endif
 #endif
     
-    if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7.0) {
-        id value;
+    id value;
 
-        switch (self.synchronizationMode) {
+    switch (self.synchronizationMode) {
         case SSKeychainQuerySynchronizationModeNo: {
-          value = @NO;
-          break;
+            value = @NO;
+            break;
         }
         case SSKeychainQuerySynchronizationModeYes: {
-          value = @YES;
-          break;
+            value = @YES;
+            break;
         }
         case SSKeychainQuerySynchronizationModeAny: {
-          value = (__bridge id)(kSecAttrSynchronizableAny);
-          break;
+            value = (__bridge id)(kSecAttrSynchronizableAny);
+            break;
         }
+        case SSKeychainQuerySynchronizationModeNotAvailable: {
+            value = nil;
+            break;
         }
+    }
 
+    if (value != nil) {
         [dictionary setObject:value forKey:(__bridge id)(kSecAttrSynchronizable)];
     }
 

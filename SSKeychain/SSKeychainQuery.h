@@ -9,23 +9,12 @@
 #import <Foundation/Foundation.h>
 #import <Security/Security.h>
 
-#ifdef __IPHONE_7_0
-	#define SSKEYCHAIN_SYNCHRONIZABLE_AVAILABLE 1
-#endif
-
-#ifdef __MAC_10_9
-	#define SSKEYCHAIN_SYNCHRONIZABLE_AVAILABLE 1
-#endif
-
-#ifdef SSKEYCHAIN_SYNCHRONIZABLE_AVAILABLE
-typedef enum {
-  
-  SSKeychainQuerySynchronizationModeNo,
-	SSKeychainQuerySynchronizationModeYes,
-  SSKeychainQuerySynchronizationModeAny,
-  
+typedef enum : NSUInteger {
+    SSKeychainQuerySynchronizationModeNo = 0,
+    SSKeychainQuerySynchronizationModeYes,
+    SSKeychainQuerySynchronizationModeAny,
+    SSKeychainQuerySynchronizationModeNotAvailable = NSNotFound
 } SSKeychainQuerySynchronizationMode;
-#endif
 
 /**
  Simple interface for querying or modifying keychain items.
@@ -46,10 +35,8 @@ typedef enum {
 @property (nonatomic, copy) NSString *accessGroup;
 #endif
 
-#ifdef SSKEYCHAIN_SYNCHRONIZABLE_AVAILABLE
 /** kSecAttrSynchronizable */
 @property (nonatomic) SSKeychainQuerySynchronizationMode synchronizationMode;
-#endif
 
 /** Root storage for password information */
 @property (nonatomic, copy) NSData *passwordData;
