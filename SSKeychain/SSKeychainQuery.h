@@ -9,6 +9,10 @@
 #import <Foundation/Foundation.h>
 #import <Security/Security.h>
 
+#if __IPHONE_8_0 || __MAC_10_10
+	#import "SSKeychainAccessControl.h"
+#endif
+
 #if __IPHONE_7_0 || __MAC_10_9
 	// Keychain synchronization available at compile time
 	#define SSKEYCHAIN_SYNCHRONIZATION_AVAILABLE 1
@@ -44,6 +48,17 @@ typedef NS_ENUM(NSUInteger, SSKeychainQuerySynchronizationMode) {
 #ifdef SSKEYCHAIN_SYNCHRONIZATION_AVAILABLE
 /** kSecAttrSynchronizable */
 @property (nonatomic) SSKeychainQuerySynchronizationMode synchronizationMode;
+#endif
+
+#if __IPHONE_8_0 || __MAC_10_10
+/** kSecUseOperationPrompt */
+@property (nonatomic, copy) NSString *useOperationPrompt;
+
+/** kSecUseNoAuthenticationUI */
+@property (nonatomic, assign) NSNumber *useNoAuthenticationUI;
+
+/** kSecAttrAccessControl */
+@property (nonatomic, strong) SSKeychainAccessControl *accessControl;
 #endif
 
 /** Root storage for password information */
