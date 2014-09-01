@@ -78,7 +78,7 @@ typedef NS_ENUM(NSUInteger, SSKeychainQuerySynchronizationMode) {
 
 
 ///------------------------
-/// @name Saving & Deleting
+/// @name Saving, Updating & Deleting
 ///------------------------
 
 /**
@@ -90,6 +90,15 @@ typedef NS_ENUM(NSUInteger, SSKeychainQuerySynchronizationMode) {
  @return `YES` if saving was successful, `NO` otherwise.
  */
 - (BOOL)save:(NSError **)error;
+
+/**
+ Updates the receiver's attributes. 
+ 
+ @param error Populated should an error occur.
+ 
+ @return `YES` if saving was successful, `NO` otherwise.
+ */
+- (BOOL)update:(NSError **)error;
 
 /**
  Delete keychain items that match the given account, service, and access group.
