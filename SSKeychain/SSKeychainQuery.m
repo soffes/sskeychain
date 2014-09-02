@@ -108,7 +108,7 @@
 	
 #if __IPHONE_8_0 || __MAC_10_10
 	if (self.useOperationPrompt) {
-		[changes setObject:self.useOperationPrompt forKey:(__bridge id)kSecUseOperationPrompt];
+		[query setObject:self.useOperationPrompt forKey:(__bridge id)kSecUseOperationPrompt];
 	}
 #endif
 	
