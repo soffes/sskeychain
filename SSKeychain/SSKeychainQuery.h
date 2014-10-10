@@ -36,6 +36,12 @@ typedef NS_ENUM(NSUInteger, SSKeychainQuerySynchronizationMode) {
 /** kSecAttrLabel */
 @property (nonatomic, copy) NSString *label;
 
+/** 
+ kSecAttrAccessible
+ Sets the accessibility type for an individual item. If set, this overrides +[SSKeychain accessibilityType].
+ */
+@property (nonatomic, copy) __attribute__((NSObject)) CFTypeRef accessibilityType;
+
 #if __IPHONE_3_0 && TARGET_OS_IPHONE
 /** kSecAttrAccessGroup (only used on iOS) */
 @property (nonatomic, copy) NSString *accessGroup;
