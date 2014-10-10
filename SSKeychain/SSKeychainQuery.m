@@ -42,7 +42,7 @@
 	if (self.label) {
 		[query setObject:self.label forKey:(__bridge id)kSecAttrLabel];
 	}
-#if __IPHONE_4_0 && TARGET_OS_IPHONE
+#ifdef SSKEYCHAIN_ACCESSIBLE_AVAILABLE
 	CFTypeRef accessibilityType = self.accessibilityType ?: [SSKeychain accessibilityType];
 	if (accessibilityType) {
 		[query setObject:(__bridge id)accessibilityType forKey:(__bridge id)kSecAttrAccessible];

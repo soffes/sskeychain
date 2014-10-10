@@ -17,7 +17,7 @@ NSString *const kSSKeychainLabelKey = @"labl";
 NSString *const kSSKeychainLastModifiedKey = @"mdat";
 NSString *const kSSKeychainWhereKey = @"svce";
 
-#if __IPHONE_4_0 && TARGET_OS_IPHONE
+#ifdef SSKEYCHAIN_ACCESSIBLE_AVAILABLE
 	static CFTypeRef SSKeychainAccessibilityType = NULL;
 #endif
 
@@ -76,7 +76,7 @@ NSString *const kSSKeychainWhereKey = @"svce";
 }
 
 
-#if __IPHONE_4_0 && TARGET_OS_IPHONE
+#ifdef SSKEYCHAIN_ACCESSIBLE_AVAILABLE
 + (CFTypeRef)accessibilityType {
 	return SSKeychainAccessibilityType;
 }
