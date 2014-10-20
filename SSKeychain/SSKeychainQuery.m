@@ -48,6 +48,36 @@
 		[query setObject:(__bridge id)accessibilityType forKey:(__bridge id)kSecAttrAccessible];
 	}
 #endif
+    
+#if __IPHONE_3_0 && TARGET_OS_IPHONE && !TARGET_IPHONE_SIMULATOR
+    if (self.accessGroup) {
+        [query setObject:self.accessGroup forKey:(__bridge id)kSecAttrAccessGroup];
+    }
+#endif
+    
+#ifdef SSKEYCHAIN_SYNCHRONIZATION_AVAILABLE
+    if ([[self class] isSynchronizationAvailable]) {
+        id value;
+        
+        switch (self.synchronizationMode) {
+            case SSKeychainQuerySynchronizationModeNo: {
+                value = @NO;
+                break;
+            }
+            case SSKeychainQuerySynchronizationModeYes: {
+                value = @YES;
+                break;
+            }
+            case SSKeychainQuerySynchronizationModeAny: {
+                value = (__bridge id)(kSecAttrSynchronizableAny);
+                break;
+            }
+        }
+        
+        [query setObject:value forKey:(__bridge id)(kSecAttrSynchronizable)];
+    }
+#endif
+    
 	status = SecItemAdd((__bridge CFDictionaryRef)query, NULL);
 
 	if (status != errSecSuccess && error != NULL) {
