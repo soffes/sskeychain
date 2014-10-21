@@ -207,12 +207,12 @@
 			  break;
 			}
 			case SSKeychainQuerySynchronizationModeAny: {
-			  value = (__bridge id)(kSecAttrSynchronizableAny);
+			  value = (__bridge id)kSecAttrSynchronizableAny;
 			  break;
 			}
 		}
 
-		[dictionary setObject:value forKey:(__bridge id)(kSecAttrSynchronizable)];
+		[dictionary setObject:value forKey:(__bridge id)kSecAttrSynchronizable];
 	}
 #endif
 
