@@ -35,20 +35,30 @@
 		return NO;
 	}
 
-	[self deleteItem:nil];
-
 	NSMutableDictionary *query = [self query];
-	[query setObject:self.passwordData forKey:(__bridge id)kSecValueData];
+	[query setObject:@YES forKey:(__bridge id)kSecReturnData];
+	[query setObject:(__bridge id)kSecMatchLimitOne forKey:(__bridge id)kSecMatchLimit];
+
+	NSMutableDictionary *updates = [NSMutableDictionary dictionaryWithCapacity:2];
+	[updates setObject:self.passwordData forKey:(__bridge id)kSecValueData];
 	if (self.label) {
-		[query setObject:self.label forKey:(__bridge id)kSecAttrLabel];
+		[updates setObject:self.label forKey:(__bridge id)kSecAttrLabel];
 	}
+
 #if __IPHONE_4_0 && TARGET_OS_IPHONE
 	CFTypeRef accessibilityType = [SSKeychain accessibilityType];
 	if (accessibilityType) {
-		[query setObject:(__bridge id)accessibilityType forKey:(__bridge id)kSecAttrAccessible];
+		[updates setObject:(__bridge id)accessibilityType forKey:(__bridge id)kSecAttrAccessible];
 	}
 #endif
-	status = SecItemAdd((__bridge CFDictionaryRef)query, NULL);
+
+	status = SecItemCopyMatching((__bridge CFDictionaryRef)query, NULL);
+	if (status == errSecSuccess) {
+		status = SecItemUpdate((__bridge CFDictionaryRef)query, (__bridge CFDictionaryRef)updates);
+	} else if (status == errSecItemNotFound) {
+		[query addEntriesFromDictionary:updates];
+		status = SecItemAdd((__bridge CFDictionaryRef)query, NULL);
+	}
 
 	if (status != errSecSuccess && error != NULL) {
 		*error = [[self class] errorWithCode:status];
