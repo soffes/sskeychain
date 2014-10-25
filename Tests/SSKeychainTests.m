@@ -154,10 +154,10 @@ static NSString *const kSSKeychainLabel = @"SSToolkitLabel";
 	NSError *error = nil;
 	
 	// create a new keychain item
-	XCTAssertTrue([SSKeychain setPassword:kSSKeychainPassword forService:kSSKeychainServiceName account:kSSKeychainAccountName error:&error], @"Unable to save item: %@", error);
+	XCTAssertTrue([SSKeychain setPassword:kSSKeychainPassword forService:kSSKeychainServiceName account:kSSKeychainAccountName accessGroup:nil error:&error], @"Unable to save item: %@", error);
 	
 	// check password
-	XCTAssertEqualObjects([SSKeychain passwordForService:kSSKeychainServiceName account:kSSKeychainAccountName], kSSKeychainPassword, @"Passwords were not equal");
+	XCTAssertEqualObjects([SSKeychain passwordForService:kSSKeychainServiceName account:kSSKeychainAccountName accessGroup:nil], kSSKeychainPassword, @"Passwords were not equal");
 	
 	// check all accounts
 	XCTAssertTrue([self _accounts:[SSKeychain allAccounts] containsAccountWithName:kSSKeychainAccountName], @"Matching account was not returned");
@@ -165,11 +165,11 @@ static NSString *const kSSKeychainLabel = @"SSToolkitLabel";
 	XCTAssertTrue([self _accounts:[SSKeychain accountsForService:kSSKeychainServiceName] containsAccountWithName:kSSKeychainAccountName], @"Matching account was not returned");
 	
 	// delete password
-	XCTAssertTrue([SSKeychain deletePasswordForService:kSSKeychainServiceName account:kSSKeychainAccountName error:&error], @"Unable to delete password: %@", error);
+	XCTAssertTrue([SSKeychain deletePasswordForService:kSSKeychainServiceName account:kSSKeychainAccountName accessGroup:nil error:&error], @"Unable to delete password: %@", error);
 	
 	// set password and delete it without error function
-	XCTAssertTrue([SSKeychain setPassword:kSSKeychainPassword forService:kSSKeychainServiceName account:kSSKeychainAccountName], @"Unable to save item");
-	XCTAssertTrue([SSKeychain deletePasswordForService:kSSKeychainServiceName account:kSSKeychainAccountName], @"Unable to delete password");
+	XCTAssertTrue([SSKeychain setPassword:kSSKeychainPassword forService:kSSKeychainServiceName account:kSSKeychainAccountName accessGroup:nil], @"Unable to save item");
+	XCTAssertTrue([SSKeychain deletePasswordForService:kSSKeychainServiceName account:kSSKeychainAccountName accessGroup:nil], @"Unable to delete password");
 	
 #if __IPHONE_4_0 && TARGET_OS_IPHONE
 	[SSKeychain setAccessibilityType:kSecAttrAccessibleWhenUnlockedThisDeviceOnly];
