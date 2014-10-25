@@ -67,12 +67,14 @@ extern NSString *const kSSKeychainWhereKey;
  @param serviceName The service for which to return the corresponding password.
 
  @param account The account for which to return the corresponding password.
+ 
+ @param accessGroup The access group for which to return the corresponding password.
 
- @return Returns a string containing the password for a given account and service, or `nil` if the Keychain doesn't
- have a password for the given parameters.
+ @return Returns a string containing the password for a given account, service and access group, or `nil` if the Keychain
+ doesn't have a password for the given parameters.
  */
-+ (NSString *)passwordForService:(NSString *)serviceName account:(NSString *)account;
-+ (NSString *)passwordForService:(NSString *)serviceName account:(NSString *)account error:(NSError **)error;
++ (NSString *)passwordForService:(NSString *)serviceName account:(NSString *)account accessGroup:(NSString *)accessGroup;
++ (NSString *)passwordForService:(NSString *)serviceName account:(NSString *)account accessGroup:(NSString *)accessGroup error:(NSError **)error;
 
 
 /**
@@ -81,11 +83,13 @@ extern NSString *const kSSKeychainWhereKey;
  @param serviceName The service for which to delete the corresponding password.
 
  @param account The account for which to delete the corresponding password.
+ 
+ @param accessGroup The access group for which to return the corresponding password.
 
  @return Returns `YES` on success, or `NO` on failure.
  */
-+ (BOOL)deletePasswordForService:(NSString *)serviceName account:(NSString *)account;
-+ (BOOL)deletePasswordForService:(NSString *)serviceName account:(NSString *)account error:(NSError **)error;
++ (BOOL)deletePasswordForService:(NSString *)serviceName account:(NSString *)account accessGroup:(NSString *)accessGroup;
++ (BOOL)deletePasswordForService:(NSString *)serviceName account:(NSString *)account accessGroup:(NSString *)accessGroup error:(NSError **)error;
 
 
 /**
@@ -96,11 +100,13 @@ extern NSString *const kSSKeychainWhereKey;
  @param serviceName The service for which to set the corresponding password.
 
  @param account The account for which to set the corresponding password.
+ 
+ @param accessGroup The accessGroup for which to set the corresponding password.
 
  @return Returns `YES` on success, or `NO` on failure.
  */
-+ (BOOL)setPassword:(NSString *)password forService:(NSString *)serviceName account:(NSString *)account;
-+ (BOOL)setPassword:(NSString *)password forService:(NSString *)serviceName account:(NSString *)account error:(NSError **)error;
++ (BOOL)setPassword:(NSString *)password forService:(NSString *)serviceName account:(NSString *)account accessGroup:(NSString *)accessGroup;
++ (BOOL)setPassword:(NSString *)password forService:(NSString *)serviceName account:(NSString *)account accessGroup:(NSString *)accessGroup error:(NSError **)error;
 
 
 /**
