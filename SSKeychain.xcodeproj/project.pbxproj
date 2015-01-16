@@ -38,6 +38,7 @@
 		21DB72BA18ECA0BB00531E87 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 21DB72B518ECA0BB00531E87 /* main.m */; };
 		21DB72BB18ECA0BB00531E87 /* SSAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 21DB72B718ECA0BB00531E87 /* SSAppDelegate.m */; };
 		21F116AC18EC9E6400126982 /* SSKeychainMac.entitlements in Resources */ = {isa = PBXBuildFile; fileRef = 21F116AB18EC9E6400126982 /* SSKeychainMac.entitlements */; };
+		5361F5F519B4E71E005E92AD /* SSKeychainAccessControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 5361F5F419B4E71E005E92AD /* SSKeychainAccessControl.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -90,6 +91,8 @@
 		21DB72B718ECA0BB00531E87 /* SSAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSAppDelegate.m; sourceTree = "<group>"; };
 		21DB72B818ECA0BB00531E87 /* SSKeychain-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "SSKeychain-Info.plist"; sourceTree = "<group>"; };
 		21F116AB18EC9E6400126982 /* SSKeychainMac.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = SSKeychainMac.entitlements; sourceTree = "<group>"; };
+		5361F5F319B4E71E005E92AD /* SSKeychainAccessControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSKeychainAccessControl.h; sourceTree = "<group>"; };
+		5361F5F419B4E71E005E92AD /* SSKeychainAccessControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSKeychainAccessControl.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -224,6 +227,8 @@
 				21CC42F017DB878300201DDC /* SSKeychain.m */,
 				21CC42F117DB878300201DDC /* SSKeychainQuery.h */,
 				21CC42F217DB878300201DDC /* SSKeychainQuery.m */,
+				5361F5F319B4E71E005E92AD /* SSKeychainAccessControl.h */,
+				5361F5F419B4E71E005E92AD /* SSKeychainAccessControl.m */,
 			);
 			path = SSKeychain;
 			sourceTree = "<group>";
@@ -333,6 +338,9 @@
 					21B85B4218EC9456009D2B98 = {
 						TestTargetID = 21CC42A617DB874300201DDC;
 					};
+					21CC42A617DB874300201DDC = {
+						DevelopmentTeam = RPD4MEV338;
+					};
 					21CC42C117DB874300201DDC = {
 						TestTargetID = 21CC42A617DB874300201DDC;
 					};
@@ -421,6 +429,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				21DB72BB18ECA0BB00531E87 /* SSAppDelegate.m in Sources */,
+				5361F5F519B4E71E005E92AD /* SSKeychainAccessControl.m in Sources */,
 				21CC42F717DB878300201DDC /* SSKeychainQuery.m in Sources */,
 				21DB72BA18ECA0BB00531E87 /* main.m in Sources */,
 				21CC42F517DB878300201DDC /* SSKeychain.m in Sources */,
@@ -515,8 +524,11 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = "$(SRCROOT)/Example/iOS/SSKeychain-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Test;
@@ -759,8 +771,11 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = "$(SRCROOT)/Example/iOS/SSKeychain-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -770,8 +785,11 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = "$(SRCROOT)/Example/iOS/SSKeychain-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
