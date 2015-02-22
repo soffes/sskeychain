@@ -10,6 +10,10 @@
 @import Security;
 
 #if __IPHONE_8_0 || __MAC_10_10
+	#define SSKEYCHAIN_ACCESS_CONTROL_AVAILABLE 1
+#endif
+
+#ifdef SSKEYCHAIN_ACCESS_CONTROL_AVAILABLE
 	#import "SSKeychainAccessControl.h"
 #endif
 
@@ -50,13 +54,15 @@ typedef NS_ENUM(NSUInteger, SSKeychainQuerySynchronizationMode) {
 @property (nonatomic) SSKeychainQuerySynchronizationMode synchronizationMode;
 #endif
 
-#if __IPHONE_8_0 || __MAC_10_10
+#if __IPHONE_8_0 && TARGET_OS_IPHONE
 /** kSecUseOperationPrompt */
 @property (nonatomic, copy) NSString *useOperationPrompt;
 
 /** kSecUseNoAuthenticationUI */
 @property (nonatomic, assign) NSNumber *useNoAuthenticationUI;
+#endif
 
+#if SSKEYCHAIN_ACCESS_CONTROL_AVAILABLE
 /** kSecAttrAccessControl */
 @property (nonatomic, strong) SSKeychainAccessControl *accessControl;
 #endif
@@ -145,13 +151,29 @@ typedef NS_ENUM(NSUInteger, SSKeychainQuerySynchronizationMode) {
 
 #ifdef SSKEYCHAIN_SYNCHRONIZATION_AVAILABLE
 /**
- Returns a boolean indicating if keychain synchronization is available on the device at runtime. The #define 
+ Returns a boolean indicating if keychain synchronization is available on the device at runtime. The #define
  SSKEYCHAIN_SYNCHRONIZATION_AVAILABLE is only for compile time. If you are checking for the presence of synchronization,
  you should use this method.
  
  @return A value indicating if keychain synchronization is available
  */
 + (BOOL)isSynchronizationAvailable;
+#endif
+
+
+///-----------------------------
+/// @name Access Control Status
+///-----------------------------
+
+#ifdef SSKEYCHAIN_ACCESS_CONTROL_AVAILABLE
+/**
+ Returns a boolean indicating if keychain access control is available on the device at runtime. The #define
+ SSKEYCHAIN_ACCESS_CONTROL_AVAILABLE is only for compile time. If you are checking for the presence of access control,
+ you should use this method.
+ 
+ @return A value indicating if keychain access control is available
+ */
++ (BOOL)isAccessControlAvailable;
 #endif
 
 @end
