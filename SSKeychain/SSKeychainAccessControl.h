@@ -7,6 +7,7 @@
 //
 
 @import Foundation;
+@import Security;
 
 /** kSecAttrAccessible */
 typedef NS_ENUM(NSUInteger, SSKeychainAccessibility) {
