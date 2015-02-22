@@ -14,7 +14,7 @@
 #endif
 
 #ifdef SSKEYCHAIN_ACCESS_CONTROL_AVAILABLE
-	#import "SSKeychainAccessControl.h"
+	#import <SSKeychain/SSKeychainAccessControl.h>
 #endif
 
 #if __IPHONE_7_0 || __MAC_10_9
