@@ -6,7 +6,7 @@
 //  Copyright (c) 2014 Sam Soffes. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
+@import Foundation;
 
 /** kSecAttrAccessible */
 typedef NS_ENUM(NSUInteger, SSKeychainAccessibility) {
