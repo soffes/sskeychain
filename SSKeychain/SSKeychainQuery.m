@@ -20,6 +20,10 @@
 @synthesize accessGroup = _accessGroup;
 #endif
 
+#ifdef SSKEYCHAIN_ACCESS_CONTROL_AVAILABLE
+@synthesize accessControl = _accessControl;
+#endif
+
 #ifdef SSKEYCHAIN_SYNCHRONIZATION_AVAILABLE
 @synthesize synchronizationMode = _synchronizationMode;
 #endif
@@ -49,10 +53,12 @@
 	}
 #endif
 	
-#if __IPHONE_8_0 || __MAC_10_10
+#if __IPHONE_8_0 && TARGET_OS_IPHONE
 	if (self.useNoAuthenticationUI) {
 		[query setObject:self.useNoAuthenticationUI forKey:(__bridge id)kSecUseNoAuthenticationUI];
 	}
+#endif
+#if SSKEYCHAIN_ACCESS_CONTROL_AVAILABLE
 	if (self.accessControl) {
 		CFErrorRef sacError = NULL;
 		SecAccessControlRef sacObject;
@@ -106,7 +112,7 @@
 	}
 #endif
 	
-#if __IPHONE_8_0 || __MAC_10_10
+#if __IPHONE_8_0 && TARGET_OS_IPHONE
 	if (self.useOperationPrompt) {
 		[query setObject:self.useOperationPrompt forKey:(__bridge id)kSecUseOperationPrompt];
 	}
@@ -157,7 +163,7 @@
 	[query setObject:@YES forKey:(__bridge id)kSecReturnAttributes];
 	[query setObject:(__bridge id)kSecMatchLimitAll forKey:(__bridge id)kSecMatchLimit];
 
-#if __IPHONE_8_0 || __MAC_10_10
+#if __IPHONE_8_0 && TARGET_OS_IPHONE
 	if (self.useOperationPrompt) {
 		[query setObject:self.useOperationPrompt forKey:(__bridge id)kSecUseOperationPrompt];
 	}
@@ -188,7 +194,7 @@
 	[query setObject:@YES forKey:(__bridge id)kSecReturnData];
 	[query setObject:(__bridge id)kSecMatchLimitOne forKey:(__bridge id)kSecMatchLimit];
 	
-#if __IPHONE_8_0 || __MAC_10_10
+#if __IPHONE_8_0 && TARGET_OS_IPHONE
 	if (self.useOperationPrompt) {
 		[query setObject:self.useOperationPrompt forKey:(__bridge id)kSecUseOperationPrompt];
 	}
@@ -246,6 +252,21 @@
 	return floor(NSFoundationVersionNumber) > NSFoundationVersionNumber_iOS_6_1;
 #else
 	return floor(NSFoundationVersionNumber) > NSFoundationVersionNumber10_8_4;
+#endif
+}
+#endif
+
+
+#pragma mark - Access Control Status
+
+#ifdef SSKEYCHAIN_ACCESS_CONTROL_AVAILABLE
++ (BOOL)isAccessControlAvailable {
+#if TARGET_OS_IPHONE
+	// Apple suggested way to check for 8.0 at runtime
+	// https://developer.apple.com/library/ios/documentation/userexperience/conceptual/transitionguide/SupportingEarlieriOS.html
+	return floor(NSFoundationVersionNumber) > NSFoundationVersionNumber_iOS_7_1;
+#else
+	return floor(NSFoundationVersionNumber) > NSFoundationVersionNumber10_9_2;
 #endif
 }
 #endif
