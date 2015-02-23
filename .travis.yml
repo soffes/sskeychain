@@ -1,4 +1,4 @@
 language: objective-c
 script:
     - xcodebuild -project SSKeychain.xcodeproj -scheme "SSKeychain iOS" clean build test
-    - xcodebuild -project SSKeychain.xcodeproj -scheme "SSKeychain Mac" -configuration Debug clean build test
+#   - xcodebuild -project SSKeychain.xcodeproj -scheme "SSKeychain Mac" -configuration Debug clean build test
