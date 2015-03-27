@@ -45,6 +45,9 @@ typedef NS_ENUM(NSUInteger, SSKeychainQuerySynchronizationMode) {
 /** kSecAttrLabel */
 @property (nonatomic, copy) NSString *label;
 
+/** kSecAttrComment **/
+@property (nonatomic, copy) NSString *comment;
+
 #ifdef SSKEYCHAIN_ACCESSIBLE_AVAILABLE
 /** 
  kSecAttrAccessible
