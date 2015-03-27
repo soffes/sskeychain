@@ -42,6 +42,11 @@
 	if (self.label) {
 		[query setObject:self.label forKey:(__bridge id)kSecAttrLabel];
 	}
+    
+    if (self.comment) {
+        [query setObject:self.comment forKey:(__bridge id)kSecAttrComment];
+    }
+    
 #ifdef SSKEYCHAIN_ACCESSIBLE_AVAILABLE
 	CFTypeRef accessibilityType = self.accessibilityType ?: [SSKeychain accessibilityType];
 	if (accessibilityType) {
