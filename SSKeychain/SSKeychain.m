@@ -9,19 +9,30 @@
 #import "SSKeychain.h"
 
 NSString *const kSSKeychainErrorDomain = @"com.samsoffes.sskeychain";
-NSString *const kSSKeychainAccountKey = @"acct";
-NSString *const kSSKeychainCreatedAtKey = @"cdat";
-NSString *const kSSKeychainClassKey = @"labl";
-NSString *const kSSKeychainDescriptionKey = @"desc";
-NSString *const kSSKeychainLabelKey = @"labl";
-NSString *const kSSKeychainLastModifiedKey = @"mdat";
-NSString *const kSSKeychainWhereKey = @"svce";
+NSString *kSSKeychainAccountKey;
+NSString *kSSKeychainCreationDateKey;
+NSString *kSSKeychainClassKey;
+NSString *kSSKeychainDescriptionKey;
+NSString *kSSKeychainLabelKey;
+NSString *kSSKeychainModificationDateKey;
+NSString *kSSKeychainServiceKey;
 
 #if __IPHONE_4_0 && TARGET_OS_IPHONE
 	static CFTypeRef SSKeychainAccessibilityType = NULL;
 #endif
 
 @implementation SSKeychain
+
++ (void)load {
+	kSSKeychainAccountKey = (__bridge id)kSecAttrAccount;
+	kSSKeychainCreationDateKey = (__bridge id)kSecAttrCreationDate;
+	kSSKeychainClassKey = (__bridge id)kSecClass;
+	kSSKeychainDescriptionKey = (__bridge id)kSecAttrDescription;
+	kSSKeychainLabelKey = (__bridge id)kSecAttrLabel;
+	kSSKeychainModificationDateKey = (__bridge id)kSecAttrModificationDate;
+	kSSKeychainServiceKey = (__bridge id)kSecAttrService;
+}
+
 
 + (NSString *)passwordForService:(NSString *)serviceName account:(NSString *)account {
 	return [self passwordForService:serviceName account:account error:nil];

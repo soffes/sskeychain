@@ -22,32 +22,32 @@ typedef NS_ENUM(OSStatus, SSKeychainErrorCode) {
 extern NSString *const kSSKeychainErrorDomain;
 
 /** Account name. */
-extern NSString *const kSSKeychainAccountKey;
+extern NSString *kSSKeychainAccountKey;
 
 /**
  Time the item was created.
 
  The value will be a string.
  */
-extern NSString *const kSSKeychainCreatedAtKey;
+extern NSString *kSSKeychainCreationDateKey;
 
 /** Item class. */
-extern NSString *const kSSKeychainClassKey;
+extern NSString *kSSKeychainClassKey;
 
 /** Item description. */
-extern NSString *const kSSKeychainDescriptionKey;
+extern NSString *kSSKeychainDescriptionKey;
 
 /** Item label. */
-extern NSString *const kSSKeychainLabelKey;
+extern NSString *kSSKeychainLabelKey;
 
 /** Time the item was last modified.
 
  The value will be a string.
  */
-extern NSString *const kSSKeychainLastModifiedKey;
+extern NSString *kSSKeychainModificationDateKey;
 
 /** Where the item was created. */
-extern NSString *const kSSKeychainWhereKey;
+extern NSString *kSSKeychainServiceKey;
 
 /**
  Simple wrapper for accessing accounts, getting passwords, setting passwords, and deleting passwords using the system
