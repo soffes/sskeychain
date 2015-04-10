@@ -175,7 +175,7 @@ static NSString *const kSSKeychainLabel = @"SSToolkitLabel";
 	XCTAssertTrue([SSKeychain setPassword:kSSKeychainPassword forService:kSSKeychainServiceName account:kSSKeychainAccountName], @"Unable to save item");
 	XCTAssertTrue([SSKeychain deletePasswordForService:kSSKeychainServiceName account:kSSKeychainAccountName], @"Unable to delete password");
 	
-#if __IPHONE_4_0 && TARGET_OS_IPHONE
+#ifdef SSKEYCHAIN_ACCESSIBLE_AVAILABLE
 	[SSKeychain setAccessibilityType:kSecAttrAccessibleWhenUnlockedThisDeviceOnly];
 	XCTAssertTrue([SSKeychain accessibilityType] == kSecAttrAccessibleWhenUnlockedThisDeviceOnly, @"Unable to verify accessibilityType");
 #endif

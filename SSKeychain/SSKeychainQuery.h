@@ -22,6 +22,15 @@ typedef NS_ENUM(NSUInteger, SSKeychainQuerySynchronizationMode) {
 };
 #endif
 
+#if __IPHONE_4_0 || __MAC_10_9
+    #define SSKEYCHAIN_ACCESSIBLE_AVAILABLE 1
+#endif
+
+#if __IPHONE_3_0 || __MAC_10_9
+    #define SSKEYCHAIN_ACCESSGROUP_AVAILABLE 1
+#endif
+
+
 /**
  Simple interface for querying or modifying keychain items.
  */
@@ -36,8 +45,19 @@ typedef NS_ENUM(NSUInteger, SSKeychainQuerySynchronizationMode) {
 /** kSecAttrLabel */
 @property (nonatomic, copy) NSString *label;
 
-#if __IPHONE_3_0 && TARGET_OS_IPHONE
-/** kSecAttrAccessGroup (only used on iOS) */
+/** kSecAttrComment **/
+@property (nonatomic, copy) NSString *comment;
+
+#ifdef SSKEYCHAIN_ACCESSIBLE_AVAILABLE
+/** 
+ kSecAttrAccessible
+ Sets the accessibility type for an individual item. If set, this overrides +[SSKeychain accessibilityType].
+ */
+@property (nonatomic, copy) __attribute__((NSObject)) CFTypeRef accessibilityType;
+#endif
+
+#if SSKEYCHAIN_ACCESSGROUP_AVAILABLE
+/** kSecAttrAccessGroup */
 @property (nonatomic, copy) NSString *accessGroup;
 #endif
 
