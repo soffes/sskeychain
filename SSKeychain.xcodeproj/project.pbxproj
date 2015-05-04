@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4412CE1C1A9A372F00C35DE1 /* SSKeychainAccessControl.h in Headers */ = {isa = PBXBuildFile; fileRef = 4412CE1A1A9A372F00C35DE1 /* SSKeychainAccessControl.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4412CE1D1A9A372F00C35DE1 /* SSKeychainAccessControl.h in Headers */ = {isa = PBXBuildFile; fileRef = 4412CE1A1A9A372F00C35DE1 /* SSKeychainAccessControl.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4412CE1E1A9A372F00C35DE1 /* SSKeychainAccessControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 4412CE1B1A9A372F00C35DE1 /* SSKeychainAccessControl.m */; };
+		4412CE1F1A9A372F00C35DE1 /* SSKeychainAccessControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 4412CE1B1A9A372F00C35DE1 /* SSKeychainAccessControl.m */; };
 		E8A6665B1A844D3A00287CA3 /* SSKeychain.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E8A666341A844CC400287CA3 /* SSKeychain.framework */; };
 		E8A666641A844DB700287CA3 /* SSKeychain.h in Headers */ = {isa = PBXBuildFile; fileRef = 21CC42EF17DB878300201DDC /* SSKeychain.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		E8A666651A844DB700287CA3 /* SSKeychain.m in Sources */ = {isa = PBXBuildFile; fileRef = 21CC42F017DB878300201DDC /* SSKeychain.m */; };
@@ -52,12 +56,14 @@
 		21CC42AE17DB874300201DDC /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		21CC42C317DB874300201DDC /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		21CC42DB17DB877900201DDC /* SSKeychainTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSKeychainTests.m; sourceTree = "<group>"; };
-		21CC42EE17DB878300201DDC /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/SSKeychain.strings; sourceTree = "<group>"; };
+		21CC42EE17DB878300201DDC /* en */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/SSKeychain.strings; sourceTree = "<group>"; };
 		21CC42EF17DB878300201DDC /* SSKeychain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSKeychain.h; sourceTree = "<group>"; };
 		21CC42F017DB878300201DDC /* SSKeychain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSKeychain.m; sourceTree = "<group>"; };
 		21CC42F117DB878300201DDC /* SSKeychainQuery.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSKeychainQuery.h; sourceTree = "<group>"; };
 		21CC42F217DB878300201DDC /* SSKeychainQuery.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSKeychainQuery.m; sourceTree = "<group>"; };
 		21CC42F917DB87C300201DDC /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		4412CE1A1A9A372F00C35DE1 /* SSKeychainAccessControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSKeychainAccessControl.h; sourceTree = "<group>"; };
+		4412CE1B1A9A372F00C35DE1 /* SSKeychainAccessControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSKeychainAccessControl.m; sourceTree = "<group>"; };
 		E8A666341A844CC400287CA3 /* SSKeychain.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SSKeychain.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E8A6664F1A844CF100287CA3 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E8A666551A844D3A00287CA3 /* SSKeychain iOS Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "SSKeychain iOS Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -166,6 +172,8 @@
 				21CC42F017DB878300201DDC /* SSKeychain.m */,
 				21CC42F117DB878300201DDC /* SSKeychainQuery.h */,
 				21CC42F217DB878300201DDC /* SSKeychainQuery.m */,
+				4412CE1A1A9A372F00C35DE1 /* SSKeychainAccessControl.h */,
+				4412CE1B1A9A372F00C35DE1 /* SSKeychainAccessControl.m */,
 			);
 			path = SSKeychain;
 			sourceTree = "<group>";
@@ -177,6 +185,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4412CE1C1A9A372F00C35DE1 /* SSKeychainAccessControl.h in Headers */,
 				E8A666641A844DB700287CA3 /* SSKeychain.h in Headers */,
 				E8A666661A844DB700287CA3 /* SSKeychainQuery.h in Headers */,
 			);
@@ -186,6 +195,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4412CE1D1A9A372F00C35DE1 /* SSKeychainAccessControl.h in Headers */,
 				E8A6668A1A844E5400287CA3 /* SSKeychain.h in Headers */,
 				E8A6668C1A844E5400287CA3 /* SSKeychainQuery.h in Headers */,
 			);
@@ -341,6 +351,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4412CE1E1A9A372F00C35DE1 /* SSKeychainAccessControl.m in Sources */,
 				E8A666671A844DB700287CA3 /* SSKeychainQuery.m in Sources */,
 				E8A666651A844DB700287CA3 /* SSKeychain.m in Sources */,
 			);
@@ -358,6 +369,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4412CE1F1A9A372F00C35DE1 /* SSKeychainAccessControl.m in Sources */,
 				E8A6668D1A844E5400287CA3 /* SSKeychainQuery.m in Sources */,
 				E8A6668B1A844E5400287CA3 /* SSKeychain.m in Sources */,
 			);
