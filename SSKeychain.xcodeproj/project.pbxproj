@@ -593,6 +593,7 @@
 		365EED9A1B2F5439006A537C /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
@@ -623,6 +624,7 @@
 		365EED9B1B2F5439006A537C /* Test */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
@@ -653,6 +655,7 @@
 		365EED9C1B2F5439006A537C /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
@@ -743,6 +746,7 @@
 		365EEDE21B2F5648006A537C /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 1;
@@ -771,6 +775,7 @@
 		365EEDE31B2F5648006A537C /* Test */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
@@ -800,6 +805,7 @@
 		365EEDE41B2F5648006A537C /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
@@ -998,6 +1004,7 @@
 				365EED9C1B2F5439006A537C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		365EED9D1B2F5439006A537C /* Build configuration list for PBXNativeTarget "SSKeychain-OSXTests" */ = {
 			isa = XCConfigurationList;
@@ -1007,6 +1014,7 @@
 				365EEDA01B2F5439006A537C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		365EEDE11B2F5648006A537C /* Build configuration list for PBXNativeTarget "SSKeychain-iOS" */ = {
 			isa = XCConfigurationList;
@@ -1016,6 +1024,7 @@
 				365EEDE41B2F5648006A537C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		365EEDE51B2F5648006A537C /* Build configuration list for PBXNativeTarget "SSKeychain-iOSTests" */ = {
 			isa = XCConfigurationList;
@@ -1025,6 +1034,7 @@
 				365EEDE81B2F5648006A537C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		365EEDFA1B2F56E0006A537C /* Build configuration list for PBXNativeTarget "SSKeychain-watchOS" */ = {
 			isa = XCConfigurationList;
@@ -1034,6 +1044,7 @@
 				365EEDFD1B2F56E0006A537C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
