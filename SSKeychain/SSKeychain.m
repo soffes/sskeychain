@@ -16,6 +16,7 @@ NSString *const kSSKeychainDescriptionKey = @"desc";
 NSString *const kSSKeychainLabelKey = @"labl";
 NSString *const kSSKeychainLastModifiedKey = @"mdat";
 NSString *const kSSKeychainWhereKey = @"svce";
+NSString *const kSSKeychainFirstRunKey = @"com.samsoffes.sskeychain.firstrun";
 
 #if __IPHONE_4_0 && TARGET_OS_IPHONE
 	static CFTypeRef SSKeychainAccessibilityType = NULL;
@@ -29,6 +30,7 @@ NSString *const kSSKeychainWhereKey = @"svce";
 
 
 + (NSString *)passwordForService:(NSString *)serviceName account:(NSString *)account error:(NSError *__autoreleasing *)error {
+	[[self class] SS_deleteKeychainInCaseOfAppUninstallForService:serviceName account:account];
 	SSKeychainQuery *query = [[SSKeychainQuery alloc] init];
 	query.service = serviceName;
 	query.account = account;
@@ -85,6 +87,15 @@ NSString *const kSSKeychainWhereKey = @"svce";
     return [query fetchAll:error];
 }
 
+
++ (void)SS_deleteKeychainInCaseOfAppUninstallForService:(NSString *)serviceName account:(NSString *)account {
+    if (![[NSUserDefaults standardUserDefaults] boolForKey:kSSKeychainFirstRunKey]) {
+        [[self class] deletePasswordForService:serviceName account:account];
+        
+        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kSSKeychainFirstRunKey];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+    }
+}
 
 #if __IPHONE_4_0 && TARGET_OS_IPHONE
 + (CFTypeRef)accessibilityType {
