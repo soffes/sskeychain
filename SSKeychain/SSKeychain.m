@@ -113,6 +113,9 @@ NSString *const kSSKeychainWhereKey = @"svce";
 
 #if __IPHONE_4_0 && TARGET_OS_IPHONE
 + (CFTypeRef)accessibilityType {
+    if (!SSKeychainAccessibilityType) {
+		SSKeychainAccessibilityType = kSecAttrAccessibleWhenUnlocked;
+	}
 	return SSKeychainAccessibilityType;
 }
 

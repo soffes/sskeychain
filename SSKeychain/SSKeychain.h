@@ -167,8 +167,8 @@ extern NSString *const kSSKeychainWhereKey;
 
  @return Returns the accessibility type.
 
- The return value will be `NULL` or one of the "Keychain Item Accessibility
- Constants" used for determining when a keychain item should be readable.
+ The default return value is `kSecAttrAccessibleWhenUnlocked`. It can be set to one of the
+ "Keychain Item Accessibility Constants" used for determining when a keychain item should be readable.
 
  @see setAccessibilityType
  */
@@ -180,7 +180,7 @@ extern NSString *const kSSKeychainWhereKey;
  @param accessibilityType One of the "Keychain Item Accessibility Constants"
  used for determining when a keychain item should be readable.
 
- If the value is `NULL` (the default), the Keychain default will be used.
+ The default value is `kSecAttrAccessibleWhenUnlocked`, which is the safest option.
 
  @see accessibilityType
  */
