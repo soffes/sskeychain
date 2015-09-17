@@ -3,10 +3,17 @@
 //  SSKeychain
 //
 //  Created by Sam Soffes on 5/19/10.
-//  Copyright (c) 2010-2014 Sam Soffes. All rights reserved.
+//  Copyright (c) 2010-2015 Sam Soffes. All rights reserved.
 //
 
-#import <SSKeychain/SSKeychainQuery.h>
+@import Foundation;
+
+//! Project version number for SSKeychain.
+FOUNDATION_EXPORT double SSKeychainVersionNumber;
+
+//! Project version string for SSKeychain.
+FOUNDATION_EXPORT const unsigned char SSKeychainVersionString[];
+
 
 /**
  Error code specific to SSKeychain that can be returned in NSError objects.
@@ -188,3 +195,6 @@ extern NSString *const kSSKeychainWhereKey;
 #endif
 
 @end
+
+
+#import <SSKeychain/SSKeychainQuery.h>

@@ -16,7 +16,7 @@
 @synthesize label = _label;
 @synthesize passwordData = _passwordData;
 
-#if __IPHONE_3_0 && TARGET_OS_IPHONE
+#if TARGET_OS_IPHONE
 @synthesize accessGroup = _accessGroup;
 #endif
 
@@ -47,7 +47,7 @@
 			[query setObject:self.label forKey:(__bridge id)kSecAttrLabel];
 		}
 		[query setObject:self.passwordData forKey:(__bridge id)kSecValueData];
-#if __IPHONE_4_0 && TARGET_OS_IPHONE
+#if TARGET_OS_IPHONE
 		CFTypeRef accessibilityType = [SSKeychain accessibilityType];
 		if (accessibilityType) {
 			[query setObject:(__bridge id)accessibilityType forKey:(__bridge id)kSecAttrAccessible];
@@ -198,7 +198,7 @@
 		[dictionary setObject:self.account forKey:(__bridge id)kSecAttrAccount];
 	}
 
-#if __IPHONE_3_0 && TARGET_OS_IPHONE && !TARGET_IPHONE_SIMULATOR
+#if TARGET_OS_IPHONE && !TARGET_IPHONE_SIMULATOR
 	if (self.accessGroup) {
 		[dictionary setObject:self.accessGroup forKey:(__bridge id)kSecAttrAccessGroup];
 	}
