@@ -3,7 +3,7 @@
 //  SSKeychain
 //
 //  Created by Caleb Davenport on 3/19/13.
-//  Copyright (c) 2013-2014 Sam Soffes. All rights reserved.
+//  Copyright (c) 2013-2015 Sam Soffes. All rights reserved.
 //
 
 @import Foundation;
@@ -36,7 +36,7 @@ typedef NS_ENUM(NSUInteger, SSKeychainQuerySynchronizationMode) {
 /** kSecAttrLabel */
 @property (nonatomic, copy) NSString *label;
 
-#if __IPHONE_3_0 && TARGET_OS_IPHONE
+#if TARGET_OS_IPHONE
 /** kSecAttrAccessGroup (only used on iOS) */
 @property (nonatomic, copy) NSString *accessGroup;
 #endif

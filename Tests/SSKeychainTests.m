@@ -6,8 +6,8 @@
 //  Copyright (c) 2011-2014 Sam Soffes. All rights reserved.
 //
 
-#import <XCTest/XCTest.h>
-#import "SSKeychain.h"
+@import XCTest;
+@import SSKeychain;
 
 static NSString *const kSSKeychainServiceName = @"SSToolkitTestService";
 static NSString *const kSSKeychainAccountName = @"SSToolkitTestAccount";
