@@ -16,10 +16,18 @@ or Cartfile if you're using Carthage:
 github "soffes/SSKeychain"
 ```
 
-To manually add to your project:
+To add as a dynamic framework for iOS 8 and above:
 
-1. Add `Security.framework` to your target
-2. Add `SSKeychain.h`, `SSKeychain.m`, `SSKeychainQuery.h`, and `SSKeychainQuery.m` to your project.
+1. Drag and drop `SSKeychain.xcodeproj` into your project.
+2. Add the appropriate `SSKeychain.framework` for your platform as a **Target Dependency** in the _Build Phases_ tab.
+3. Add `SSKeychain.framework` to **Link Binary With Libraries** in the _Build Phases_ tab.
+4. `#import <SSKeychain/SSKeychain.h>` wherever necessary.
+
+To add to your project the old-fashioned way:
+
+1. Add `Security.framework` to your target.
+2. Drag and drop the `SSKeychain` folder into your project.
+3. `#import "SSKeychain.h"` wherever necessary.
 
 SSKeychain requires ARC.
 
