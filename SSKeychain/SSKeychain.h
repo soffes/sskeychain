@@ -6,7 +6,7 @@
 //  Copyright (c) 2010-2014 Sam Soffes. All rights reserved.
 //
 
-#import <SSKeychain/SSKeychainQuery.h>
+#import "SSKeychainQuery.h"
 
 /**
  Error code specific to SSKeychain that can be returned in NSError objects.
