@@ -14,9 +14,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "234ED1BC1C7C743700F0E7E9"
-               BuildableName = "SSKeychain.framework"
-               BlueprintName = "SSKeychain tvOS"
+               BlueprintIdentifier = "234092881C7F0F2D0095ACE9"
+               BuildableName = "SSKeychain-tvOS.framework"
+               BlueprintName = "SSKeychain-tvOS"
                ReferencedContainer = "container:SSKeychain.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -33,8 +33,8 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "234ED1C51C7C743700F0E7E9"
-               BuildableName = "SSKeychain tvOSTests.xctest"
-               BlueprintName = "SSKeychain tvOSTests"
+               BuildableName = "SSKeychainTests-tvOS.xctest"
+               BlueprintName = "SSKeychainTests-tvOS"
                ReferencedContainer = "container:SSKeychain.xcodeproj">
             </BuildableReference>
          </TestableReference>
@@ -42,9 +42,9 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "234ED1BC1C7C743700F0E7E9"
-            BuildableName = "SSKeychain.framework"
-            BlueprintName = "SSKeychain tvOS"
+            BlueprintIdentifier = "234092881C7F0F2D0095ACE9"
+            BuildableName = "SSKeychain-tvOS.framework"
+            BlueprintName = "SSKeychain-tvOS"
             ReferencedContainer = "container:SSKeychain.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
@@ -64,9 +64,9 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "234ED1BC1C7C743700F0E7E9"
-            BuildableName = "SSKeychain.framework"
-            BlueprintName = "SSKeychain tvOS"
+            BlueprintIdentifier = "234092881C7F0F2D0095ACE9"
+            BuildableName = "SSKeychain-tvOS.framework"
+            BlueprintName = "SSKeychain-tvOS"
             ReferencedContainer = "container:SSKeychain.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
@@ -82,9 +82,9 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "234ED1BC1C7C743700F0E7E9"
-            BuildableName = "SSKeychain.framework"
-            BlueprintName = "SSKeychain tvOS"
+            BlueprintIdentifier = "234092881C7F0F2D0095ACE9"
+            BuildableName = "SSKeychain-tvOS.framework"
+            BlueprintName = "SSKeychain-tvOS"
             ReferencedContainer = "container:SSKeychain.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
