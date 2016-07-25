@@ -7,7 +7,7 @@
 //
 
 #import "SSFKeychainQuery.h"
-#import "SSKeychain.h"
+#import "SSFKeychain.h"
 
 @implementation SSFKeychainQuery
 
@@ -27,7 +27,7 @@
 #pragma mark - Public
 
 - (BOOL)save:(NSError *__autoreleasing *)error {
-	OSStatus status = SSKeychainErrorBadArguments;
+	OSStatus status = SSFKeychainErrorBadArguments;
 	if (!self.service || !self.account || !self.passwordData) {
 		if (error) {
 			*error = [[self class] errorWithCode:status];
@@ -41,7 +41,7 @@
 		query = [[NSMutableDictionary alloc]init];
 		[query setObject:self.passwordData forKey:(__bridge id)kSecValueData];
 #if __IPHONE_4_0 && TARGET_OS_IPHONE
-		CFTypeRef accessibilityType = [SSKeychain accessibilityType];
+		CFTypeRef accessibilityType = [SSFKeychain accessibilityType];
 		if (accessibilityType) {
 			[query setObject:(__bridge id)accessibilityType forKey:(__bridge id)kSecAttrAccessible];
 		}
@@ -54,7 +54,7 @@
 		}
 		[query setObject:self.passwordData forKey:(__bridge id)kSecValueData];
 #if __IPHONE_4_0 && TARGET_OS_IPHONE
-		CFTypeRef accessibilityType = [SSKeychain accessibilityType];
+		CFTypeRef accessibilityType = [SSFKeychain accessibilityType];
 		if (accessibilityType) {
 			[query setObject:(__bridge id)accessibilityType forKey:(__bridge id)kSecAttrAccessible];
 		}
@@ -68,7 +68,7 @@
 
 
 - (BOOL)deleteItem:(NSError *__autoreleasing *)error {
-	OSStatus status = SSKeychainErrorBadArguments;
+	OSStatus status = SSFKeychainErrorBadArguments;
 	if (!self.service || !self.account) {
 		if (error) {
 			*error = [[self class] errorWithCode:status];
@@ -111,7 +111,7 @@
 	[query setObject:@YES forKey:(__bridge id)kSecReturnAttributes];
 	[query setObject:(__bridge id)kSecMatchLimitAll forKey:(__bridge id)kSecMatchLimit];
 #if __IPHONE_4_0 && TARGET_OS_IPHONE
-	CFTypeRef accessibilityType = [SSKeychain accessibilityType];
+	CFTypeRef accessibilityType = [SSFKeychain accessibilityType];
 	if (accessibilityType) {
 		[query setObject:(__bridge id)accessibilityType forKey:(__bridge id)kSecAttrAccessible];
 	}
@@ -129,7 +129,7 @@
 
 
 - (BOOL)fetch:(NSError *__autoreleasing *)error {
-	OSStatus status = SSKeychainErrorBadArguments;
+	OSStatus status = SSFKeychainErrorBadArguments;
 	if (!self.service || !self.account) {
 		if (error) {
 			*error = [[self class] errorWithCode:status];
@@ -258,7 +258,7 @@
 	NSString *message = nil;
 	switch (code) {
 		case errSecSuccess: return nil;
-		case SSKeychainErrorBadArguments: message = NSLocalizedStringFromTableInBundle(@"SSKeychainErrorBadArguments", @"SSKeychain", resourcesBundle, nil); break;
+		case SSFKeychainErrorBadArguments: message = NSLocalizedStringFromTableInBundle(@"SSKeychainErrorBadArguments", @"SSKeychain", resourcesBundle, nil); break;
 
 #if TARGET_OS_IPHONE
 		case errSecUnimplemented: {
@@ -310,7 +310,7 @@
 	if (message) {
 		userInfo = @{ NSLocalizedDescriptionKey : message };
 	}
-	return [NSError errorWithDomain:kSSKeychainErrorDomain code:code userInfo:userInfo];
+	return [NSError errorWithDomain:kSSFKeychainErrorDomain code:code userInfo:userInfo];
 }
 
 @end
