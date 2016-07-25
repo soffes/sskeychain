@@ -1,15 +1,15 @@
 //
-//  SSKeychainQuery.m
+//  SSFKeychainQuery.m
 //  SSKeychain
 //
 //  Created by Caleb Davenport on 3/19/13.
 //  Copyright (c) 2013-2014 Sam Soffes. All rights reserved.
 //
 
-#import "SSKeychainQuery.h"
+#import "SSFKeychainQuery.h"
 #import "SSKeychain.h"
 
-@implementation SSKeychainQuery
+@implementation SSFKeychainQuery
 
 @synthesize account = _account;
 @synthesize service = _service;
@@ -225,15 +225,15 @@
 		id value;
 
 		switch (self.synchronizationMode) {
-			case SSKeychainQuerySynchronizationModeNo: {
+			case SSFKeychainQuerySynchronizationModeNo: {
 			  value = @NO;
 			  break;
 			}
-			case SSKeychainQuerySynchronizationModeYes: {
+			case SSFKeychainQuerySynchronizationModeYes: {
 			  value = @YES;
 			  break;
 			}
-			case SSKeychainQuerySynchronizationModeAny: {
+			case SSFKeychainQuerySynchronizationModeAny: {
 			  value = (__bridge id)(kSecAttrSynchronizableAny);
 			  break;
 			}
