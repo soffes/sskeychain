@@ -1,28 +1,28 @@
 //
-//  SSKeychain.m
+//  SSFKeychain.m
 //  SSKeychain
 //
 //  Created by Sam Soffes on 5/19/10.
 //  Copyright (c) 2010-2014 Sam Soffes. All rights reserved.
 //
 
-#import "SSKeychain.h"
-#import "SSKeychainQuery.h"
+#import "SSFKeychain.h"
+#import "SSFKeychainQuery.h"
 
-NSString *const kSSKeychainErrorDomain = @"com.samsoffes.sskeychain";
-NSString *const kSSKeychainAccountKey = @"acct";
-NSString *const kSSKeychainCreatedAtKey = @"cdat";
-NSString *const kSSKeychainClassKey = @"labl";
-NSString *const kSSKeychainDescriptionKey = @"desc";
-NSString *const kSSKeychainLabelKey = @"labl";
-NSString *const kSSKeychainLastModifiedKey = @"mdat";
-NSString *const kSSKeychainWhereKey = @"svce";
+NSString *const kSSFKeychainErrorDomain = @"com.samsoffes.sskeychain";
+NSString *const kSSFKeychainAccountKey = @"acct";
+NSString *const kSSFKeychainCreatedAtKey = @"cdat";
+NSString *const kSSFKeychainClassKey = @"labl";
+NSString *const kSSFKeychainDescriptionKey = @"desc";
+NSString *const kSSFKeychainLabelKey = @"labl";
+NSString *const kSSFKeychainLastModifiedKey = @"mdat";
+NSString *const kSSFKeychainWhereKey = @"svce";
 
 #if __IPHONE_4_0 && TARGET_OS_IPHONE
-	static CFTypeRef SSKeychainAccessibilityType = NULL;
+	static CFTypeRef SSFKeychainAccessibilityType = NULL;
 #endif
 
-@implementation SSKeychain
+@implementation SSFKeychain
 
 + (NSString *)passwordForService:(NSString *)serviceName account:(NSString *)account {
 	return [self passwordForService:serviceName account:account error:nil];
@@ -30,7 +30,7 @@ NSString *const kSSKeychainWhereKey = @"svce";
 
 
 + (NSString *)passwordForService:(NSString *)serviceName account:(NSString *)account error:(NSError *__autoreleasing *)error {
-	SSKeychainQuery *query = [[SSKeychainQuery alloc] init];
+	SSFKeychainQuery *query = [[SSFKeychainQuery alloc] init];
 	query.service = serviceName;
 	query.account = account;
 	[query fetch:error];
@@ -42,7 +42,7 @@ NSString *const kSSKeychainWhereKey = @"svce";
 }
 
 + (NSData *)passwordDataForService:(NSString *)serviceName account:(NSString *)account error:(NSError **)error {
-    SSKeychainQuery *query = [[SSKeychainQuery alloc] init];
+    SSFKeychainQuery *query = [[SSFKeychainQuery alloc] init];
     query.service = serviceName;
     query.account = account;
     [query fetch:error];
@@ -57,7 +57,7 @@ NSString *const kSSKeychainWhereKey = @"svce";
 
 
 + (BOOL)deletePasswordForService:(NSString *)serviceName account:(NSString *)account error:(NSError *__autoreleasing *)error {
-	SSKeychainQuery *query = [[SSKeychainQuery alloc] init];
+	SSFKeychainQuery *query = [[SSFKeychainQuery alloc] init];
 	query.service = serviceName;
 	query.account = account;
 	return [query deleteItem:error];
@@ -70,7 +70,7 @@ NSString *const kSSKeychainWhereKey = @"svce";
 
 
 + (BOOL)setPassword:(NSString *)password forService:(NSString *)serviceName account:(NSString *)account error:(NSError *__autoreleasing *)error {
-	SSKeychainQuery *query = [[SSKeychainQuery alloc] init];
+	SSFKeychainQuery *query = [[SSFKeychainQuery alloc] init];
 	query.service = serviceName;
 	query.account = account;
 	query.password = password;
@@ -83,7 +83,7 @@ NSString *const kSSKeychainWhereKey = @"svce";
 
 
 + (BOOL)setPasswordData:(NSData *)password forService:(NSString *)serviceName account:(NSString *)account error:(NSError **)error {
-    SSKeychainQuery *query = [[SSKeychainQuery alloc] init];
+    SSFKeychainQuery *query = [[SSFKeychainQuery alloc] init];
     query.service = serviceName;
     query.account = account;
     query.passwordData = password;
@@ -106,7 +106,7 @@ NSString *const kSSKeychainWhereKey = @"svce";
 
 
 + (NSArray *)accountsForService:(NSString *)serviceName error:(NSError *__autoreleasing *)error {
-    SSKeychainQuery *query = [[SSKeychainQuery alloc] init];
+    SSFKeychainQuery *query = [[SSFKeychainQuery alloc] init];
     query.service = serviceName;
     return [query fetchAll:error];
 }
@@ -114,16 +114,16 @@ NSString *const kSSKeychainWhereKey = @"svce";
 
 #if __IPHONE_4_0 && TARGET_OS_IPHONE
 + (CFTypeRef)accessibilityType {
-	return SSKeychainAccessibilityType;
+	return SSFKeychainAccessibilityType;
 }
 
 
 + (void)setAccessibilityType:(CFTypeRef)accessibilityType {
 	CFRetain(accessibilityType);
-	if (SSKeychainAccessibilityType) {
-		CFRelease(SSKeychainAccessibilityType);
+	if (SSFKeychainAccessibilityType) {
+		CFRelease(SSFKeychainAccessibilityType);
 	}
-	SSKeychainAccessibilityType = accessibilityType;
+	SSFKeychainAccessibilityType = accessibilityType;
 }
 #endif
 
