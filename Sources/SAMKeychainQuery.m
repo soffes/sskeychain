@@ -49,9 +49,6 @@
 		status = SecItemUpdate((__bridge CFDictionaryRef)(searchQuery), (__bridge CFDictionaryRef)(query));
 	}else if(status == errSecItemNotFound){//item not found, create it!
 		query = [self query];
-		if (self.label) {
-			[query setObject:self.label forKey:(__bridge id)kSecAttrLabel];
-		}
 		[query setObject:self.passwordData forKey:(__bridge id)kSecValueData];
 #if __IPHONE_4_0 && TARGET_OS_IPHONE
 		CFTypeRef accessibilityType = [SAMKeychain accessibilityType];
@@ -130,7 +127,7 @@
 
 - (BOOL)fetch:(NSError *__autoreleasing *)error {
 	OSStatus status = SAMKeychainErrorBadArguments;
-	if (!self.service || !self.account) {
+	if (!(self.service && self.account) || !(self.label && self.account)) {
 		if (error) {
 			*error = [[self class] errorWithCode:status];
 		}
@@ -210,6 +207,10 @@
 
 	if (self.account) {
 		[dictionary setObject:self.account forKey:(__bridge id)kSecAttrAccount];
+	}
+	
+	if (self.label) {
+		[dictionary setObject:self.label forKey:(__bridge id)kSecAttrLabel];
 	}
 
 #ifdef SAMKEYCHAIN_ACCESS_GROUP_AVAILABLE

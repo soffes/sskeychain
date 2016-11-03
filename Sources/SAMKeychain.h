@@ -81,6 +81,34 @@ extern NSString *const kSAMKeychainWhereKey;
 + (nullable NSString *)passwordForService:(NSString *)serviceName account:(NSString *)account error:(NSError **)error __attribute__((swift_error(none)));
 
 /**
+ Returns a string containing the password for a given account and service, or `nil` if the Keychain doesn't have a
+ password for the given parameters.
+ 
+ @param serviceName The service for which to return the corresponding password.
+ 
+ @param account The account for which to return the corresponding password.
+ 
+ @return Returns a string containing the password for a given account and service, or `nil` if the Keychain doesn't
+ have a password for the given parameters.
+ */
++ (nullable NSString *)passwordForService:(NSString *)serviceName account:(NSString *)account label:(NSString *)label;
++ (nullable NSString *)passwordForService:(NSString *)serviceName account:(NSString *)account label:(NSString *)label error:(NSError **)error __attribute__((swift_error(none)));
+
+/**
+ Returns a nsdata containing the password for a given account and service, or `nil` if the Keychain doesn't have a
+ password for the given parameters.
+ 
+ @param serviceName The service for which to return the corresponding password.
+ 
+ @param account The account for which to return the corresponding password.
+ 
+ @return Returns a nsdata containing the password for a given account and service, or `nil` if the Keychain doesn't
+ have a password for the given parameters.
+ */
++ (nullable NSData *)passwordDataForService:(NSString *)serviceName account:(NSString *)account label:(NSString *)label;
++ (nullable NSData *)passwordDataForService:(NSString *)serviceName account:(NSString *)account label:(NSString *)label error:(NSError **)error __attribute__((swift_error(none)));
+
+/**
  Returns a nsdata containing the password for a given account and service, or `nil` if the Keychain doesn't have a
  password for the given parameters.
 
@@ -121,6 +149,38 @@ extern NSString *const kSAMKeychainWhereKey;
  */
 + (BOOL)setPassword:(NSString *)password forService:(NSString *)serviceName account:(NSString *)account;
 + (BOOL)setPassword:(NSString *)password forService:(NSString *)serviceName account:(NSString *)account error:(NSError **)error __attribute__((swift_error(none)));
+
+/**
+ Sets a password in the Keychain.
+ 
+ @param password The password to store in the Keychain.
+ 
+ @param serviceName The service for which to set the corresponding password (where field n UI).
+ 
+ @param account The account for which to set the corresponding password.
+ 
+ @param label The label set to the keychain item. This is what is displayed in the name field of a keychain item.
+ 
+ @return Returns `YES` on success, or `NO` on failure.
+ */
++ (BOOL)setPassword:(NSString *)password forService:(NSString *)serviceName account:(NSString *)account label:(NSString *)label;
++ (BOOL)setPassword:(NSString *)password forService:(NSString *)serviceName account:(NSString *)account label:(NSString *)label error:(NSError *__autoreleasing *)error;
+
+/**
+ Sets a password in the Keychain.
+ 
+ @param password The password to store in the Keychain.
+ 
+ @param serviceName The service for which to set the corresponding password.
+ 
+ @param account The account for which to set the corresponding password.
+ 
+ @param label The label set to the keychain item. This is what is displayed in the name field of a keychain item.
+ 
+ @return Returns `YES` on success, or `NO` on failure.
+ */
++ (BOOL)setPasswordData:(NSData *)password forService:(NSString *)serviceName account:(NSString *)account label:(NSString *)label;
++ (BOOL)setPasswordData:(NSData *)password forService:(NSString *)serviceName account:(NSString *)account label:(NSString *)label error:(NSError **)error __attribute__((swift_error(none)));
 
 /**
  Sets a password in the Keychain.
