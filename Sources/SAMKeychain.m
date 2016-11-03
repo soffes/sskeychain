@@ -92,6 +92,19 @@ NSString *const kSAMKeychainWhereKey = @"svce";
     return query.passwordData;
 }
 
++ (BOOL)deletePasswordForService:(NSString *)serviceName account:(NSString *)account label:(nonnull NSString *)label{
+	return [self deletePasswordForService:serviceName account:account label:label error:nil];
+}
+
+
++ (BOOL)deletePasswordForService:(NSString *)serviceName account:(NSString *)account label:(NSString *)label error:(NSError *__autoreleasing *)error {
+	SAMKeychainQuery *query = [[SAMKeychainQuery alloc] init];
+	query.label = label;
+	query.service = serviceName;
+	query.account = account;
+	return [query deleteItem:error];
+}
+
 + (BOOL)deletePasswordForService:(NSString *)serviceName account:(NSString *)account {
 	return [self deletePasswordForService:serviceName account:account error:nil];
 }
@@ -166,6 +179,17 @@ NSString *const kSAMKeychainWhereKey = @"svce";
     return [self accountsForService:nil error:error];
 }
 
++ (nullable NSArray *)accountsForService:(nullable NSString *)serviceName label:(NSString *)label{
+	return [self accountsForService:serviceName label:label error:nil];
+}
+
+
++ (nullable NSArray *)accountsForService:(nullable NSString *)serviceName label:(NSString *)label error:(NSError *__autoreleasing *)error {
+	SAMKeychainQuery *query = [[SAMKeychainQuery alloc] init];
+	query.label = label;
+	query.service = serviceName;
+	return [query fetchAll:error];
+}
 
 + (nullable NSArray *)accountsForService:(nullable NSString *)serviceName {
 	return [self accountsForService:serviceName error:nil];

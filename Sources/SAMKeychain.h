@@ -88,6 +88,7 @@ extern NSString *const kSAMKeychainWhereKey;
  
  @param account The account for which to return the corresponding password.
  
+ @param label The label set to the keychain item. This is what is displayed in the name field of a keychain item.
  @return Returns a string containing the password for a given account and service, or `nil` if the Keychain doesn't
  have a password for the given parameters.
  */
@@ -122,6 +123,19 @@ extern NSString *const kSAMKeychainWhereKey;
 + (nullable NSData *)passwordDataForService:(NSString *)serviceName account:(NSString *)account;
 + (nullable NSData *)passwordDataForService:(NSString *)serviceName account:(NSString *)account error:(NSError **)error __attribute__((swift_error(none)));
 
+/**
+ Deletes a password from the Keychain.
+ 
+ @param serviceName The service for which to delete the corresponding password.
+ 
+ @param account The account for which to delete the corresponding password.
+ 
+ @param label The label set to the keychain item. This is what is displayed in the name field of a keychain item.
+ 
+ @return Returns `YES` on success, or `NO` on failure.
+ */
++ (BOOL)deletePasswordForService:(NSString *)serviceName account:(NSString *)account label:(NSString *)label;
++ (BOOL)deletePasswordForService:(NSString *)serviceName account:(NSString *)account label:(NSString *)label error:(NSError **)error __attribute__((swift_error(none)));
 
 /**
  Deletes a password from the Keychain.
@@ -208,6 +222,22 @@ extern NSString *const kSAMKeychainWhereKey;
 + (nullable NSArray<NSDictionary<NSString *, id> *> *)allAccounts;
 + (nullable NSArray<NSDictionary<NSString *, id> *> *)allAccounts:(NSError *__autoreleasing *)error __attribute__((swift_error(none)));
 
+/**
+ Returns an array containing the Keychain's accounts for a given service, or `nil` if the Keychain doesn't have any
+ accounts for the given service.
+ 
+ See the `NSString` constants declared in SAMKeychain.h for a list of keys that can be used when accessing the
+ dictionaries returned by this method.
+ 
+ @param serviceName The service for which to return the corresponding accounts.
+ 
+ @param label The label set to the keychain item. This is what is displayed in the name field of a keychain item.
+ 
+ @return An array of dictionaries containing the Keychain's accounts for a given `serviceName`, or `nil` if the Keychain
+ doesn't have any accounts for the given `serviceName`. The order of the objects in the array isn't defined.
+ */
++ (nullable NSArray<NSDictionary<NSString *, id> *> *)accountsForService:(nullable NSString *)serviceName label:(nullable NSString *)label;
++ (nullable NSArray<NSDictionary<NSString *, id> *> *)accountsForService:(nullable NSString *)serviceName label:(nullable NSString *)label error:(NSError *__autoreleasing *)error __attribute__((swift_error(none)));
 
 /**
  Returns an array containing the Keychain's accounts for a given service, or `nil` if the Keychain doesn't have any
