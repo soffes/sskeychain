@@ -20,10 +20,19 @@ or Cartfile if you're using Carthage:
 github "soffes/SAMKeychain"
 ```
 
-To manually add to your project:
+To add as a dynamic framework for iOS 8 and above:
 
-1. Add `Security.framework` to your target
-2. Add `SAMKeychain.h`, `SAMKeychain.m`, `SAMKeychainQuery.h`, and `SAMKeychainQuery.m` to your project.
+1. Drag and drop `SAMKeychain.xcodeproj` into your project.
+2. Add the appropriate `SAMKeychain.framework` for your platform as a **Target Dependency** in the _Build Phases_ tab.
+3. Add `SAMKeychain.framework` to **Link Binary With Libraries** in the _Build Phases_ tab.
+4. `#import <SAMKeychain/SAMKeychain.h>` wherever necessary.
+
+To add to your project the old-fashioned way:
+
+1. Add `Security.framework` to your target.
+2. Drag and drop the `Sources` folder into your project.
+3. Drag and drop `Support/SAMKeychain.bundle` into your project for localized error strings.
+3. `#import "SAMKeychain.h"` wherever necessary.
 
 SAMKeychain requires ARC.
 
