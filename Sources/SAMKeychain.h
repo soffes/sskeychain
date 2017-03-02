@@ -80,6 +80,29 @@ extern NSString *const kSAMKeychainWhereKey;
 + (nullable NSString *)passwordForService:(NSString *)serviceName account:(NSString *)account;
 + (nullable NSString *)passwordForService:(NSString *)serviceName account:(NSString *)account error:(NSError **)error __attribute__((swift_error(none)));
 
+
+#ifdef SAMKEYCHAIN_ACCESS_GROUP_AVAILABLE
+#if !TARGET_IPHONE_SIMULATOR
+/**
+ Returns a string containing the password for a given account, service and accessGroup, or `nil` if the Keychain doesn't have a
+ password for the given parameters.
+ 
+ @param serviceName The service for which to return the corresponding password.
+ 
+ @param account The account for which to return the corresponding password.
+ 
+ @param accessGroup The accessGroup for which to return the corresponding password.
+ 
+ @return Returns a string containing the password for a given account and service, or `nil` if the Keychain doesn't
+ have a password for the given parameters.
+ 
+ @note Remember to enable app groups, in the Capabilities pane.
+ */
++ (nullable NSString *)passwordForService:(NSString *)serviceName account:(NSString *)account accessGroup:(NSString *)accessGroup;
++ (nullable NSString *)passwordForService:(NSString *)serviceName account:(NSString *)account accessGroup:(NSString *)accessGroup error:(NSError **)error __attribute__((swift_error(none)));
+#endif
+#endif
+
 /**
  Returns a nsdata containing the password for a given account and service, or `nil` if the Keychain doesn't have a
  password for the given parameters.
@@ -95,6 +118,28 @@ extern NSString *const kSAMKeychainWhereKey;
 + (nullable NSData *)passwordDataForService:(NSString *)serviceName account:(NSString *)account error:(NSError **)error __attribute__((swift_error(none)));
 
 
+#ifdef SAMKEYCHAIN_ACCESS_GROUP_AVAILABLE
+#if !TARGET_IPHONE_SIMULATOR
+/**
+ Returns a nsdata containing the password for a given account, service and accessGroup, or `nil` if the Keychain doesn't have a
+ password for the given parameters.
+ 
+ @param serviceName The service for which to return the corresponding password.
+ 
+ @param account The account for which to return the corresponding password.
+ 
+ @param accessGroup The accessGroup for which to return the corresponding password.
+ 
+ @return Returns a nsdata containing the password for a given account and service, or `nil` if the Keychain doesn't
+ have a password for the given parameters.
+ 
+ @note Remember to enable app groups, in the Capabilities pane.
+ */
++ (nullable NSData *)passwordDataForService:(NSString *)serviceName account:(NSString *)account accessGroup:(NSString *)accessGroup;
++ (nullable NSData *)passwordDataForService:(NSString *)serviceName account:(NSString *)account accessGroup:(NSString *)accessGroup error:(NSError **)error __attribute__((swift_error(none)));
+#endif
+#endif
+
 /**
  Deletes a password from the Keychain.
 
@@ -107,6 +152,25 @@ extern NSString *const kSAMKeychainWhereKey;
 + (BOOL)deletePasswordForService:(NSString *)serviceName account:(NSString *)account;
 + (BOOL)deletePasswordForService:(NSString *)serviceName account:(NSString *)account error:(NSError **)error __attribute__((swift_error(none)));
 
+#ifdef SAMKEYCHAIN_ACCESS_GROUP_AVAILABLE
+#if !TARGET_IPHONE_SIMULATOR
+/**
+ Deletes a password from the Keychain.
+ 
+ @param serviceName The service for which to delete the corresponding password.
+ 
+ @param account The account for which to delete the corresponding password.
+ 
+ @param accessGroup The accessGroup for which to return the corresponding password.
+ 
+ @return Returns `YES` on success, or `NO` on failure.
+ 
+ @note Remember to enable app groups, in the Capabilities pane.
+ */
++ (BOOL)deletePasswordForService:(NSString *)serviceName account:(NSString *)account accessGroup:(NSString *)accessGroup;
++ (BOOL)deletePasswordForService:(NSString *)serviceName account:(NSString *)account accessGroup:(NSString *)accessGroup error:(NSError **)error __attribute__((swift_error(none)));
+#endif
+#endif
 
 /**
  Sets a password in the Keychain.
@@ -122,6 +186,28 @@ extern NSString *const kSAMKeychainWhereKey;
 + (BOOL)setPassword:(NSString *)password forService:(NSString *)serviceName account:(NSString *)account;
 + (BOOL)setPassword:(NSString *)password forService:(NSString *)serviceName account:(NSString *)account error:(NSError **)error __attribute__((swift_error(none)));
 
+#ifdef SAMKEYCHAIN_ACCESS_GROUP_AVAILABLE
+#if !TARGET_IPHONE_SIMULATOR
+/**
+ Sets a password in the Keychain.
+ 
+ @param password The password to store in the Keychain.
+ 
+ @param serviceName The service for which to set the corresponding password.
+ 
+ @param account The account for which to set the corresponding password.
+ 
+ @param accessGroup The accessGroup for which to return the corresponding password.
+ 
+ @return Returns `YES` on success, or `NO` on failure.
+ 
+ @note Remember to enable app groups, in the Capabilities pane.
+ */
++ (BOOL)setPassword:(NSString *)password forService:(NSString *)serviceName account:(NSString *)account accessGroup:(NSString *)accessGroup;
++ (BOOL)setPassword:(NSString *)password forService:(NSString *)serviceName account:(NSString *)account accessGroup:(NSString *)accessGroup error:(NSError **)error __attribute__((swift_error(none)));
+#endif
+#endif
+
 /**
  Sets a password in the Keychain.
 
@@ -135,6 +221,28 @@ extern NSString *const kSAMKeychainWhereKey;
  */
 + (BOOL)setPasswordData:(NSData *)password forService:(NSString *)serviceName account:(NSString *)account;
 + (BOOL)setPasswordData:(NSData *)password forService:(NSString *)serviceName account:(NSString *)account error:(NSError **)error __attribute__((swift_error(none)));
+
+#ifdef SAMKEYCHAIN_ACCESS_GROUP_AVAILABLE
+#if !TARGET_IPHONE_SIMULATOR
+/**
+ Sets a password in the Keychain.
+ 
+ @param password The password to store in the Keychain.
+ 
+ @param serviceName The service for which to set the corresponding password.
+ 
+ @param account The account for which to set the corresponding password.
+ 
+ @param accessGroup The accessGroup for which to return the corresponding password.
+ 
+ @return Returns `YES` on success, or `NO` on failure.
+ 
+ @note Remember to enable app groups, in the Capabilities pane.
+ */
++ (BOOL)setPasswordData:(NSData *)password forService:(NSString *)serviceName account:(NSString *)account accessGroup:(NSString *)accessGroup;
++ (BOOL)setPasswordData:(NSData *)password forService:(NSString *)serviceName account:(NSString *)account accessGroup:(NSString *)accessGroup error:(NSError **)error __attribute__((swift_error(none)));
+#endif
+#endif
 
 /**
  Returns an array containing the Keychain's accounts, or `nil` if the Keychain has no accounts.
