@@ -71,7 +71,10 @@ typedef NS_ENUM(NSUInteger, SAMKeychainQuerySynchronizationMode) {
 @property (nonatomic, copy) NSString *useOperationPrompt;
 
 /** kSecUseNoAuthenticationUI */
-@property (nonatomic, assign) NSNumber *useNoAuthenticationUI;
+@property (nonatomic, assign) NSNumber *useNoAuthenticationUI DEPRECATED_MSG_ATTRIBUTE("Use -useAuthenticationUI instead.");
+
+/** kSecUseAuthenticationUI */
+@property (nonatomic, assign) NSNumber *useAuthenticationUI;
 #endif
 
 #if SAMKEYCHAIN_ACCESS_CONTROL_AVAILABLE

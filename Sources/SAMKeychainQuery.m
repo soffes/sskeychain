@@ -65,8 +65,14 @@
 #endif
 
 #if __IPHONE_8_0 && TARGET_OS_IPHONE
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
 		if (self.useNoAuthenticationUI) {
-			[query setObject:self.useNoAuthenticationUI forKey:(__bridge id)kSecUseNoAuthenticationUI];
+			self.useAuthenticationUI = @(!self.useNoAuthenticationUI.boolValue);
+		}
+#pragma clang diagnostic pop
+		if (self.useAuthenticationUI) {
+			[query setObject:self.useAuthenticationUI forKey:(__bridge id)kSecUseAuthenticationUI];
 		}
 #endif
 #if SAMKEYCHAIN_ACCESS_CONTROL_AVAILABLE
