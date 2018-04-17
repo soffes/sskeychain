@@ -27,7 +27,7 @@ typedef NS_ENUM(NSUInteger, SAMKeychainAccessibility) {
 	SAMKeychainAccessibilityWhenUnlockedThisDeviceOnly,
 
 	/** kSecAttrAccessibleAfterFirstUnlockThisDeviceOnly */
-	SAMKeychainAccessibilityAfterFisrtUnlockThisDeviceOnly,
+	SAMKeychainAccessibilityAfterFirstUnlockThisDeviceOnly,
 
 	/** kSecAttrAccessibleAlwaysThisDeviceOnly */
 	SAMKeychainAccessibilityAlwaysThisDeviceOnly

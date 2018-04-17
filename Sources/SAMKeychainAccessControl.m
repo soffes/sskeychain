@@ -27,7 +27,7 @@ CFTypeRef getSecAttrAccessibility(SAMKeychainAccessibility ssAttr) {
 		case SAMKeychainAccessibilityAlwaysThisDeviceOnly: return kSecAttrAccessibleAlwaysThisDeviceOnly;
 		case SAMKeychainAccessibilityWhenUnlockedThisDeviceOnly: return kSecAttrAccessibleWhenUnlockedThisDeviceOnly;
 		case SAMKeychainAccessibilityWhenPasscodeSetThisDeviceOnly: return kSecAttrAccessibleWhenPasscodeSetThisDeviceOnly;
-		case SAMKeychainAccessibilityAfterFisrtUnlockThisDeviceOnly: return kSecAttrAccessibleWhenPasscodeSetThisDeviceOnly;
+		case SAMKeychainAccessibilityAfterFirstUnlockThisDeviceOnly: return kSecAttrAccessibleWhenPasscodeSetThisDeviceOnly;
 		default: return NULL;
 	}
 }
