@@ -195,7 +195,7 @@ class KeychainTests: XCTestCase {
 
 	private func accounts(accounts: [[String: AnyObject]], containsAccountWithName name: String) -> Bool {
 		for account in accounts {
-			if let acct = account["acct"] as? String where acct == name {
+			if let acct = account["acct"] as? String, acct == name {
 				return true
 			}
 		}

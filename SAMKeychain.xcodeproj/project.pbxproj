@@ -31,6 +31,14 @@
 		21632DD31C9282BD00C40D7D /* KeychainTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21632DD21C9282BD00C40D7D /* KeychainTests.swift */; };
 		21632DD41C9282BD00C40D7D /* KeychainTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21632DD21C9282BD00C40D7D /* KeychainTests.swift */; };
 		21632DD51C9282BD00C40D7D /* KeychainTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21632DD21C9282BD00C40D7D /* KeychainTests.swift */; };
+		C598E1962086415500B79528 /* SAMKeychainAccessControl.h in Headers */ = {isa = PBXBuildFile; fileRef = C598E1942086415500B79528 /* SAMKeychainAccessControl.h */; };
+		C598E1972086415500B79528 /* SAMKeychainAccessControl.h in Headers */ = {isa = PBXBuildFile; fileRef = C598E1942086415500B79528 /* SAMKeychainAccessControl.h */; };
+		C598E1982086415500B79528 /* SAMKeychainAccessControl.h in Headers */ = {isa = PBXBuildFile; fileRef = C598E1942086415500B79528 /* SAMKeychainAccessControl.h */; };
+		C598E1992086415500B79528 /* SAMKeychainAccessControl.h in Headers */ = {isa = PBXBuildFile; fileRef = C598E1942086415500B79528 /* SAMKeychainAccessControl.h */; };
+		C598E19A2086415500B79528 /* SAMKeychainAccessControl.m in Sources */ = {isa = PBXBuildFile; fileRef = C598E1952086415500B79528 /* SAMKeychainAccessControl.m */; };
+		C598E19B2086415500B79528 /* SAMKeychainAccessControl.m in Sources */ = {isa = PBXBuildFile; fileRef = C598E1952086415500B79528 /* SAMKeychainAccessControl.m */; };
+		C598E19C2086415500B79528 /* SAMKeychainAccessControl.m in Sources */ = {isa = PBXBuildFile; fileRef = C598E1952086415500B79528 /* SAMKeychainAccessControl.m */; };
+		C598E19D2086415500B79528 /* SAMKeychainAccessControl.m in Sources */ = {isa = PBXBuildFile; fileRef = C598E1952086415500B79528 /* SAMKeychainAccessControl.m */; };
 		E8A6665B1A844D3A00287CA3 /* SAMKeychain.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E8A666341A844CC400287CA3 /* SAMKeychain.framework */; };
 		E8A6667A1A844E4100287CA3 /* SAMKeychain.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E8A6666F1A844E4100287CA3 /* SAMKeychain.framework */; };
 /* End PBXBuildFile section */
@@ -82,6 +90,8 @@
 		21CC42AE17DB874300201DDC /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		21CC42C317DB874300201DDC /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		21CC42F917DB87C300201DDC /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		C598E1942086415500B79528 /* SAMKeychainAccessControl.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SAMKeychainAccessControl.h; sourceTree = "<group>"; };
+		C598E1952086415500B79528 /* SAMKeychainAccessControl.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SAMKeychainAccessControl.m; sourceTree = "<group>"; };
 		E8A666341A844CC400287CA3 /* SAMKeychain.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SAMKeychain.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E8A666551A844D3A00287CA3 /* SAMKeychainTests-iOS.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "SAMKeychainTests-iOS.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E8A6666F1A844E4100287CA3 /* SAMKeychain.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SAMKeychain.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -151,6 +161,8 @@
 				21632D7D1C92599100C40D7D /* SAMKeychain.m */,
 				21632D7E1C92599100C40D7D /* SAMKeychainQuery.h */,
 				21632D7F1C92599100C40D7D /* SAMKeychainQuery.m */,
+				C598E1942086415500B79528 /* SAMKeychainAccessControl.h */,
+				C598E1952086415500B79528 /* SAMKeychainAccessControl.m */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
@@ -232,6 +244,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C598E1982086415500B79528 /* SAMKeychainAccessControl.h in Headers */,
 				21632DB11C925A6000C40D7D /* SAMKeychain.h in Headers */,
 				21632DB31C925A6000C40D7D /* SAMKeychainQuery.h in Headers */,
 			);
@@ -241,6 +254,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C598E1992086415500B79528 /* SAMKeychainAccessControl.h in Headers */,
 				21632DC51C925B3700C40D7D /* SAMKeychain.h in Headers */,
 				21632DC71C925B3700C40D7D /* SAMKeychainQuery.h in Headers */,
 			);
@@ -250,6 +264,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C598E1962086415500B79528 /* SAMKeychainAccessControl.h in Headers */,
 				21632D821C92599100C40D7D /* SAMKeychain.h in Headers */,
 				21632D841C92599100C40D7D /* SAMKeychainQuery.h in Headers */,
 			);
@@ -259,6 +274,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C598E1972086415500B79528 /* SAMKeychainAccessControl.h in Headers */,
 				21632D8F1C9259C100C40D7D /* SAMKeychain.h in Headers */,
 				21632D911C9259C100C40D7D /* SAMKeychainQuery.h in Headers */,
 			);
@@ -505,6 +521,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				21632DB41C925A6000C40D7D /* SAMKeychainQuery.m in Sources */,
+				C598E19C2086415500B79528 /* SAMKeychainAccessControl.m in Sources */,
 				21632DB21C925A6000C40D7D /* SAMKeychain.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -522,6 +539,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				21632DC81C925B3700C40D7D /* SAMKeychainQuery.m in Sources */,
+				C598E19D2086415500B79528 /* SAMKeychainAccessControl.m in Sources */,
 				21632DC61C925B3700C40D7D /* SAMKeychain.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -531,6 +549,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				21632D851C92599100C40D7D /* SAMKeychainQuery.m in Sources */,
+				C598E19A2086415500B79528 /* SAMKeychainAccessControl.m in Sources */,
 				21632D831C92599100C40D7D /* SAMKeychain.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -548,6 +567,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				21632D921C9259C100C40D7D /* SAMKeychainQuery.m in Sources */,
+				C598E19B2086415500B79528 /* SAMKeychainAccessControl.m in Sources */,
 				21632D901C9259C100C40D7D /* SAMKeychain.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
