@@ -10,8 +10,7 @@
 
 @implementation SAMKeychainAccessControl
 
-+ (instancetype)accessControlWithAccessibility:(SAMKeychainAccessibility)accesibility flags:(SAMKeychainCreateFlags)flags
-{
++ (instancetype)accessControlWithAccessibility:(SAMKeychainAccessibility)accesibility flags:(SAMKeychainCreateFlags)flags {
 	SAMKeychainAccessControl *accessControl = [self new];
 	accessControl.accessibility = accesibility;
 	accessControl.flags = flags;
@@ -20,31 +19,15 @@
 
 @end
 
-CFTypeRef getSecAttrAccessibility(SAMKeychainAccessibility ssAttr)
-{
+CFTypeRef getSecAttrAccessibility(SAMKeychainAccessibility ssAttr) {
 	switch (ssAttr) {
-		case SAMKeychainAccessibilityAlways:
-			return kSecAttrAccessibleAlways;
-
-		case SAMKeychainAccessibilityWhenUnlocked:
-			return kSecAttrAccessibleWhenUnlocked;
-
-		case SAMKeychainAccessibilityAfterFirstUnlock:
-			return kSecAttrAccessibleAfterFirstUnlock;
-
-		case SAMKeychainAccessibilityAlwaysThisDeviceOnly:
-			return kSecAttrAccessibleAlwaysThisDeviceOnly;
-
-		case SAMKeychainAccessibilityWhenUnlockedThisDeviceOnly:
-			return kSecAttrAccessibleWhenUnlockedThisDeviceOnly;
-
-		case SAMKeychainAccessibilityWhenPasscodeSetThisDeviceOnly:
-			return kSecAttrAccessibleWhenPasscodeSetThisDeviceOnly;
-
-		case SAMKeychainAccessibilityAfterFisrtUnlockThisDeviceOnly:
-			return kSecAttrAccessibleWhenPasscodeSetThisDeviceOnly;
-
-		default:
-			return NULL;
+		case SAMKeychainAccessibilityAlways: return kSecAttrAccessibleAlways;
+		case SAMKeychainAccessibilityWhenUnlocked: return kSecAttrAccessibleWhenUnlocked;
+		case SAMKeychainAccessibilityAfterFirstUnlock: return kSecAttrAccessibleAfterFirstUnlock;
+		case SAMKeychainAccessibilityAlwaysThisDeviceOnly: return kSecAttrAccessibleAlwaysThisDeviceOnly;
+		case SAMKeychainAccessibilityWhenUnlockedThisDeviceOnly: return kSecAttrAccessibleWhenUnlockedThisDeviceOnly;
+		case SAMKeychainAccessibilityWhenPasscodeSetThisDeviceOnly: return kSecAttrAccessibleWhenPasscodeSetThisDeviceOnly;
+		case SAMKeychainAccessibilityAfterFisrtUnlockThisDeviceOnly: return kSecAttrAccessibleWhenPasscodeSetThisDeviceOnly;
+		default: return NULL;
 	}
 }
