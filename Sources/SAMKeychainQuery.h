@@ -190,6 +190,22 @@ typedef NS_ENUM(NSUInteger, SAMKeychainQuerySynchronizationMode) {
  @return A value indicating if keychain access control is available
  */
 + (BOOL)isAccessControlAvailable;
+
+#if TARGET_OS_IPHONE
+/**
+ Returns a boolean indicating if biometry is configured on the device.
+
+ @return A value indicating if authentication by biometry is configured
+ */
++ (BOOL)isBiometricsAuthenticationAvailable;
+
+/**
+ Returns a boolean indicating if device passcode or biometry is configured on the device.
+
+ @return A value indicating if device passcode or biometry is configured
+ */
++ (BOOL)isPasscodeOrBiometricsAuthenticationAvailable;
+#endif
 #endif
 
 @end

@@ -8,6 +8,7 @@
 
 #import "SAMKeychainQuery.h"
 #import "SAMKeychain.h"
+#import <LocalAuthentication/LocalAuthentication.h>
 
 @implementation SAMKeychainQuery
 
@@ -297,6 +298,16 @@
 	return floor(NSFoundationVersionNumber) > NSFoundationVersionNumber10_9_2;
 #endif
 }
+
+#if TARGET_OS_IPHONE
++ (BOOL)isBiometricsAuthenticationAvailable {
+	return [[LAContext new] canEvaluatePolicy:LAPolicyDeviceOwnerAuthenticationWithBiometrics error:nil];
+}
+
++ (BOOL)isPasscodeOrBiometricsAuthenticationAvailable {
+	return [[LAContext new] canEvaluatePolicy:LAPolicyDeviceOwnerAuthentication error:nil];
+}
+#endif
 #endif
 
 #pragma mark - Private
