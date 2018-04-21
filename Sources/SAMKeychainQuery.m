@@ -300,11 +300,11 @@
 }
 
 #if TARGET_OS_IPHONE
-+ (BOOL)isBiometricsAuthenticationAvailable {
++ (BOOL)isBiometryAvailable {
 	return [[LAContext new] canEvaluatePolicy:LAPolicyDeviceOwnerAuthenticationWithBiometrics error:nil];
 }
 
-+ (BOOL)isPasscodeOrBiometricsAuthenticationAvailable {
++ (BOOL)isPasscodeOrBiometryAvailable {
 	return [[LAContext new] canEvaluatePolicy:LAPolicyDeviceOwnerAuthentication error:nil];
 }
 #endif

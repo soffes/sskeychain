@@ -197,14 +197,14 @@ typedef NS_ENUM(NSUInteger, SAMKeychainQuerySynchronizationMode) {
 
  @return A value indicating if authentication by biometry is configured
  */
-+ (BOOL)isBiometricsAuthenticationAvailable;
++ (BOOL)isBiometryAvailable;
 
 /**
  Returns a boolean indicating if device passcode or biometry is configured on the device.
 
  @return A value indicating if device passcode or biometry is configured
  */
-+ (BOOL)isPasscodeOrBiometricsAuthenticationAvailable;
++ (BOOL)isPasscodeOrBiometryAvailable;
 #endif
 #endif
 
