@@ -47,9 +47,15 @@
 		[query setObject:self.passwordData forKey:(__bridge id)kSecValueData];
 #if __IPHONE_4_0 && TARGET_OS_IPHONE
 		CFTypeRef accessibilityType = [SAMKeychain accessibilityType];
+#if SAMKEYCHAIN_ACCESS_CONTROL_AVAILABLE
+		if (accessibilityType && !self.accessControl) { // accessibilityType and accessControl are mutually exclusive
+			[query setObject:(__bridge id)accessibilityType forKey:(__bridge id)kSecAttrAccessible];
+		}
+#else
 		if (accessibilityType) {
 			[query setObject:(__bridge id)accessibilityType forKey:(__bridge id)kSecAttrAccessible];
 		}
+#endif
 #endif
 		status = SecItemUpdate((__bridge CFDictionaryRef)(searchQuery), (__bridge CFDictionaryRef)(query));
 	}else if(status == errSecItemNotFound){//item not found, create it!
@@ -60,9 +66,15 @@
 		[query setObject:self.passwordData forKey:(__bridge id)kSecValueData];
 #if __IPHONE_4_0 && TARGET_OS_IPHONE
 		CFTypeRef accessibilityType = [SAMKeychain accessibilityType];
+#if SAMKEYCHAIN_ACCESS_CONTROL_AVAILABLE
+		if (accessibilityType && !self.accessControl) { // accessibilityType and accessControl are mutually exclusive
+			[query setObject:(__bridge id)accessibilityType forKey:(__bridge id)kSecAttrAccessible];
+		}
+#else
 		if (accessibilityType) {
 			[query setObject:(__bridge id)accessibilityType forKey:(__bridge id)kSecAttrAccessible];
 		}
+#endif
 #endif
 
 #if __IPHONE_8_0 && TARGET_OS_IPHONE
