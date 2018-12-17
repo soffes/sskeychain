@@ -8,6 +8,7 @@
 
 #import "SAMKeychainQuery.h"
 #import "SAMKeychain.h"
+#import <LocalAuthentication/LocalAuthentication.h>
 
 @implementation SAMKeychainQuery
 
@@ -18,6 +19,10 @@
 
 #ifdef SAMKEYCHAIN_ACCESS_GROUP_AVAILABLE
 @synthesize accessGroup = _accessGroup;
+#endif
+
+#ifdef SAMKEYCHAIN_ACCESS_CONTROL_AVAILABLE
+@synthesize accessControl = _accessControl;
 #endif
 
 #ifdef SAMKEYCHAIN_SYNCHRONIZATION_AVAILABLE
@@ -42,9 +47,15 @@
 		[query setObject:self.passwordData forKey:(__bridge id)kSecValueData];
 #if __IPHONE_4_0 && TARGET_OS_IPHONE
 		CFTypeRef accessibilityType = [SAMKeychain accessibilityType];
+#if SAMKEYCHAIN_ACCESS_CONTROL_AVAILABLE
+		if (accessibilityType && !self.accessControl) { // accessibilityType and accessControl are mutually exclusive
+			[query setObject:(__bridge id)accessibilityType forKey:(__bridge id)kSecAttrAccessible];
+		}
+#else
 		if (accessibilityType) {
 			[query setObject:(__bridge id)accessibilityType forKey:(__bridge id)kSecAttrAccessible];
 		}
+#endif
 #endif
 		status = SecItemUpdate((__bridge CFDictionaryRef)(searchQuery), (__bridge CFDictionaryRef)(query));
 	}else if(status == errSecItemNotFound){//item not found, create it!
@@ -55,17 +66,94 @@
 		[query setObject:self.passwordData forKey:(__bridge id)kSecValueData];
 #if __IPHONE_4_0 && TARGET_OS_IPHONE
 		CFTypeRef accessibilityType = [SAMKeychain accessibilityType];
+#if SAMKEYCHAIN_ACCESS_CONTROL_AVAILABLE
+		if (accessibilityType && !self.accessControl) { // accessibilityType and accessControl are mutually exclusive
+			[query setObject:(__bridge id)accessibilityType forKey:(__bridge id)kSecAttrAccessible];
+		}
+#else
 		if (accessibilityType) {
 			[query setObject:(__bridge id)accessibilityType forKey:(__bridge id)kSecAttrAccessible];
 		}
 #endif
+#endif
+
+#if __IPHONE_8_0 && TARGET_OS_IPHONE
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
+		if (self.useNoAuthenticationUI) {
+			self.useAuthenticationUI = @(!self.useNoAuthenticationUI.boolValue);
+		}
+#pragma clang diagnostic pop
+		if (self.useAuthenticationUI) {
+			[query setObject:self.useAuthenticationUI forKey:(__bridge id)kSecUseAuthenticationUI];
+		}
+#endif
+#if SAMKEYCHAIN_ACCESS_CONTROL_AVAILABLE
+		if (self.accessControl) {
+			CFErrorRef sacError = NULL;
+			SecAccessControlRef sacObject;
+
+			sacObject = SecAccessControlCreateWithFlags(kCFAllocatorDefault,
+														getSecAttrAccessibility(self.accessControl.accessibility),
+														(CFIndex)self.accessControl.flags,
+														&sacError);
+
+			if (sacObject == NULL || sacError != NULL) {
+				if (error) {
+					*error = (__bridge NSError *)sacError;
+				}
+				return NO;
+			}
+
+			[query setObject:(__bridge id)sacObject forKey:(__bridge id)kSecAttrAccessControl];
+		}
+#endif
+
 		status = SecItemAdd((__bridge CFDictionaryRef)query, NULL);
 	}
 	if (status != errSecSuccess && error != NULL) {
 		*error = [[self class] errorWithCode:status];
 	}
-	return (status == errSecSuccess);}
+	return (status == errSecSuccess);
+}
 
+- (BOOL)update:(NSError *__autoreleasing *)error {
+	OSStatus status = SAMKeychainErrorBadArguments;
+	if (!self.service || !self.account || !self.passwordData) {
+		if (error) {
+			*error = [[self class] errorWithCode:status];
+		}
+		return NO;
+	}
+
+	NSMutableDictionary *query = [self query];
+	NSMutableDictionary *changes = [NSMutableDictionary dictionary];
+
+	[changes setObject:self.passwordData forKey:(__bridge id)kSecValueData];
+	if (self.label) {
+		[changes setObject:self.label forKey:(__bridge id)kSecAttrLabel];
+	}
+#if __IPHONE_4_0 && TARGET_OS_IPHONE
+	CFTypeRef accessibilityType = [SAMKeychain accessibilityType];
+	if (accessibilityType) {
+		[changes setObject:(__bridge id)accessibilityType forKey:(__bridge id)kSecAttrAccessible];
+	}
+#endif
+
+#if __IPHONE_8_0 && TARGET_OS_IPHONE
+	if (self.useOperationPrompt) {
+		[query setObject:self.useOperationPrompt forKey:(__bridge id)kSecUseOperationPrompt];
+	}
+#endif
+
+	status = SecItemUpdate((__bridge CFDictionaryRef)query, (__bridge CFDictionaryRef)changes);
+
+	if (status != errSecSuccess && error != NULL) {
+		*error = [[self class] errorWithCode:status];
+	}
+
+	return (status == errSecSuccess);
+}
 
 - (BOOL)deleteItem:(NSError *__autoreleasing *)error {
 	OSStatus status = SAMKeychainErrorBadArguments;
@@ -117,6 +205,12 @@
 	}
 #endif
 
+#if __IPHONE_8_0 && TARGET_OS_IPHONE
+	if (self.useOperationPrompt) {
+		[query setObject:self.useOperationPrompt forKey:(__bridge id)kSecUseOperationPrompt];
+	}
+#endif
+
 	CFTypeRef result = NULL;
 	OSStatus status = SecItemCopyMatching((__bridge CFDictionaryRef)query, &result);
 	if (status != errSecSuccess && error != NULL) {
@@ -141,6 +235,13 @@
 	NSMutableDictionary *query = [self query];
 	[query setObject:@YES forKey:(__bridge id)kSecReturnData];
 	[query setObject:(__bridge id)kSecMatchLimitOne forKey:(__bridge id)kSecMatchLimit];
+
+#if __IPHONE_8_0 && TARGET_OS_IPHONE
+	if (self.useOperationPrompt) {
+		[query setObject:self.useOperationPrompt forKey:(__bridge id)kSecUseOperationPrompt];
+	}
+#endif
+
 	status = SecItemCopyMatching((__bridge CFDictionaryRef)query, &result);
 
 	if (status != errSecSuccess) {
@@ -197,6 +298,29 @@
 }
 #endif
 
+#pragma mark - Access Control Status
+
+#ifdef SAMKEYCHAIN_ACCESS_CONTROL_AVAILABLE
++ (BOOL)isAccessControlAvailable {
+#if TARGET_OS_IPHONE
+	// Apple suggested way to check for 8.0 at runtime
+	// https://developer.apple.com/library/ios/documentation/userexperience/conceptual/transitionguide/SupportingEarlieriOS.html
+	return floor(NSFoundationVersionNumber) > NSFoundationVersionNumber_iOS_7_1;
+#else
+	return floor(NSFoundationVersionNumber) > NSFoundationVersionNumber10_9_2;
+#endif
+}
+
+#if TARGET_OS_IPHONE
++ (BOOL)isBiometryAvailable {
+	return [[LAContext new] canEvaluatePolicy:LAPolicyDeviceOwnerAuthenticationWithBiometrics error:nil];
+}
+
++ (BOOL)isPasscodeOrBiometryAvailable {
+	return [[LAContext new] canEvaluatePolicy:LAPolicyDeviceOwnerAuthentication error:nil];
+}
+#endif
+#endif
 
 #pragma mark - Private
 

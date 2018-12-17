@@ -14,6 +14,14 @@
 	#import <Security/Security.h>
 #endif
 
+#if __IPHONE_8_0 || __MAC_10_10
+	#define SAMKEYCHAIN_ACCESS_CONTROL_AVAILABLE 1
+#endif
+
+#ifdef SAMKEYCHAIN_ACCESS_CONTROL_AVAILABLE
+	#import <SAMKeychain/SAMKeychainAccessControl.h>
+#endif
+
 NS_ASSUME_NONNULL_BEGIN
 
 #if __IPHONE_7_0 || __MAC_10_9
@@ -58,6 +66,23 @@ typedef NS_ENUM(NSUInteger, SAMKeychainQuerySynchronizationMode) {
 @property (nonatomic) SAMKeychainQuerySynchronizationMode synchronizationMode;
 #endif
 
+#if __IPHONE_8_0 && TARGET_OS_IPHONE
+/** kSecUseOperationPrompt */
+@property (nonatomic, copy) NSString *useOperationPrompt;
+
+/** kSecUseNoAuthenticationUI */
+@property (nonatomic, assign) NSNumber *useNoAuthenticationUI DEPRECATED_MSG_ATTRIBUTE("Use -useAuthenticationUI instead.");
+
+/** kSecUseAuthenticationUI */
+@property (nonatomic, assign) NSNumber *useAuthenticationUI;
+#endif
+
+#if SAMKEYCHAIN_ACCESS_CONTROL_AVAILABLE
+/** kSecAttrAccessControl */
+@property (nonatomic, strong) SAMKeychainAccessControl *accessControl;
+#endif
+
+
 /** Root storage for password information */
 @property (nonatomic, copy, nullable) NSData *passwordData;
 
@@ -75,7 +100,7 @@ typedef NS_ENUM(NSUInteger, SAMKeychainQuerySynchronizationMode) {
 
 
 ///------------------------
-/// @name Saving & Deleting
+/// @name Saving, Updating & Deleting
 ///------------------------
 
 /**
@@ -87,6 +112,15 @@ typedef NS_ENUM(NSUInteger, SAMKeychainQuerySynchronizationMode) {
  @return `YES` if saving was successful, `NO` otherwise.
  */
 - (BOOL)save:(NSError **)error;
+
+/**
+ Updates the receiver's attributes.
+
+ @param error Populated should an error occur.
+
+ @return `YES` if saving was successful, `NO` otherwise.
+ */
+- (BOOL)update:(NSError **)error;
 
 /**
  Delete keychain items that match the given account, service, and access group.
@@ -133,13 +167,45 @@ typedef NS_ENUM(NSUInteger, SAMKeychainQuerySynchronizationMode) {
 
 #ifdef SAMKEYCHAIN_SYNCHRONIZATION_AVAILABLE
 /**
- Returns a boolean indicating if keychain synchronization is available on the device at runtime. The #define 
+ Returns a boolean indicating if keychain synchronization is available on the device at runtime. The #define
  SAMKEYCHAIN_SYNCHRONIZATION_AVAILABLE is only for compile time. If you are checking for the presence of synchronization,
  you should use this method.
  
  @return A value indicating if keychain synchronization is available
  */
 + (BOOL)isSynchronizationAvailable;
+#endif
+
+
+///-----------------------------
+/// @name Access Control Status
+///-----------------------------
+
+#ifdef SAMKEYCHAIN_ACCESS_CONTROL_AVAILABLE
+/**
+ Returns a boolean indicating if keychain access control is available on the device at runtime. The #define
+ SAMKEYCHAIN_ACCESS_CONTROL_AVAILABLE is only for compile time. If you are checking for the presence of access control,
+ you should use this method.
+
+ @return A value indicating if keychain access control is available
+ */
++ (BOOL)isAccessControlAvailable;
+
+#if TARGET_OS_IPHONE
+/**
+ Returns a boolean indicating if biometry is configured on the device.
+
+ @return A value indicating if authentication by biometry is configured
+ */
++ (BOOL)isBiometryAvailable;
+
+/**
+ Returns a boolean indicating if device passcode or biometry is configured on the device.
+
+ @return A value indicating if device passcode or biometry is configured
+ */
++ (BOOL)isPasscodeOrBiometryAvailable;
+#endif
 #endif
 
 @end
