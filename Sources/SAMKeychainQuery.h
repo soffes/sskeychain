@@ -53,6 +53,9 @@ typedef NS_ENUM(NSUInteger, SAMKeychainQuerySynchronizationMode) {
 @property (nonatomic, copy, nullable) NSString *accessGroup;
 #endif
 
+/** kSecAttrAccessible (only used on iOS) */
+@property (nonatomic, copy, nullable) NSString *accessibility;
+
 #ifdef SAMKEYCHAIN_SYNCHRONIZATION_AVAILABLE
 /** kSecAttrSynchronizable */
 @property (nonatomic) SAMKeychainQuerySynchronizationMode synchronizationMode;
