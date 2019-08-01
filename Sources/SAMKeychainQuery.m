@@ -40,8 +40,13 @@
 	if (status == errSecSuccess) {//item already exists, update it!
 		query = [[NSMutableDictionary alloc]init];
 		[query setObject:self.passwordData forKey:(__bridge id)kSecValueData];
-#if __IPHONE_4_0 && TARGET_OS_IPHONE
-		CFTypeRef accessibilityType = [SAMKeychain accessibilityType];
+		
+		if (self.comment) {
+			[query setObject:self.comment forKey:(__bridge id)kSecAttrComment];
+		}
+#ifdef SSKEYCHAIN_ACCESSIBLE_AVAILABLE
+		CFTypeRef accessibilityType = self.accessibilityType ?: [SAMKeychain accessibilityType];
+		
 		if (accessibilityType) {
 			[query setObject:(__bridge id)accessibilityType forKey:(__bridge id)kSecAttrAccessible];
 		}
@@ -53,8 +58,8 @@
 			[query setObject:self.label forKey:(__bridge id)kSecAttrLabel];
 		}
 		[query setObject:self.passwordData forKey:(__bridge id)kSecValueData];
-#if __IPHONE_4_0 && TARGET_OS_IPHONE
-		CFTypeRef accessibilityType = [SAMKeychain accessibilityType];
+#if SSKEYCHAIN_ACCESSIBLE_AVAILABLE
+		CFTypeRef accessibilityType = self.accessibilityType ?: [SAMKeychain accessibilityType];
 		if (accessibilityType) {
 			[query setObject:(__bridge id)accessibilityType forKey:(__bridge id)kSecAttrAccessible];
 		}
@@ -110,8 +115,10 @@
 	NSMutableDictionary *query = [self query];
 	[query setObject:@YES forKey:(__bridge id)kSecReturnAttributes];
 	[query setObject:(__bridge id)kSecMatchLimitAll forKey:(__bridge id)kSecMatchLimit];
-#if __IPHONE_4_0 && TARGET_OS_IPHONE
-	CFTypeRef accessibilityType = [SAMKeychain accessibilityType];
+
+#if SSKEYCHAIN_ACCESSIBLE_AVAILABLE
+	CFTypeRef accessibilityType = self.accessibilityType ?: [SAMKeychain accessibilityType];
+	
 	if (accessibilityType) {
 		[query setObject:(__bridge id)accessibilityType forKey:(__bridge id)kSecAttrAccessible];
 	}

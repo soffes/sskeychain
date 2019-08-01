@@ -16,15 +16,13 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-#if __IPHONE_7_0 || __MAC_10_9
-	// Keychain synchronization available at compile time
-	#define SAMKEYCHAIN_SYNCHRONIZATION_AVAILABLE 1
-#endif
+#define SSKEYCHAIN_ACCESSIBLE_AVAILABLE 1
 
-#if __IPHONE_3_0 || __MAC_10_9
-	// Keychain access group available at compile time
-	#define SAMKEYCHAIN_ACCESS_GROUP_AVAILABLE 1
-#endif
+// Keychain synchronization available at compile time
+#define SAMKEYCHAIN_SYNCHRONIZATION_AVAILABLE 1
+
+// Keychain access group available at compile time
+#define SAMKEYCHAIN_ACCESS_GROUP_AVAILABLE 1
 
 #ifdef SAMKEYCHAIN_SYNCHRONIZATION_AVAILABLE
 typedef NS_ENUM(NSUInteger, SAMKeychainQuerySynchronizationMode) {
@@ -48,6 +46,16 @@ typedef NS_ENUM(NSUInteger, SAMKeychainQuerySynchronizationMode) {
 /** kSecAttrLabel */
 @property (nonatomic, copy, nullable) NSString *label;
 
+/** kSecAttrComment **/
+@property (nonatomic, copy) NSString *comment;
+
+#ifdef SSKEYCHAIN_ACCESSIBLE_AVAILABLE
+/**
+ kSecAttrAccessible
+ Sets the accessibility type for an individual item. If set, this overrides +[SAMKeychain accessibilityType].
+ */
+@property (nonatomic, copy) __attribute__((NSObject)) CFTypeRef accessibilityType;
+#endif
 #ifdef SAMKEYCHAIN_ACCESS_GROUP_AVAILABLE
 /** kSecAttrAccessGroup (only used on iOS) */
 @property (nonatomic, copy, nullable) NSString *accessGroup;
