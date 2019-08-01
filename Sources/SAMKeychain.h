@@ -167,7 +167,7 @@ extern NSString *const kSAMKeychainWhereKey;
 
 #pragma mark - Configuration
 
-#if __IPHONE_4_0 && TARGET_OS_IPHONE
+#ifdef SSKEYCHAIN_ACCESSIBLE_AVAILABLE
 /**
  Returns the accessibility type for all future passwords saved to the Keychain.
 

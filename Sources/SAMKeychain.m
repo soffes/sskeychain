@@ -18,7 +18,7 @@ NSString *const kSAMKeychainLabelKey = @"labl";
 NSString *const kSAMKeychainLastModifiedKey = @"mdat";
 NSString *const kSAMKeychainWhereKey = @"svce";
 
-#if __IPHONE_4_0 && TARGET_OS_IPHONE
+#ifdef SSKEYCHAIN_ACCESSIBLE_AVAILABLE
 	static CFTypeRef SAMKeychainAccessibilityType = NULL;
 #endif
 
@@ -112,7 +112,7 @@ NSString *const kSAMKeychainWhereKey = @"svce";
 }
 
 
-#if __IPHONE_4_0 && TARGET_OS_IPHONE
+#ifdef SSKEYCHAIN_ACCESSIBLE_AVAILABLE
 + (CFTypeRef)accessibilityType {
 	return SAMKeychainAccessibilityType;
 }
