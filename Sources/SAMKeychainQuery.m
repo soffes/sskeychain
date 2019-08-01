@@ -45,7 +45,7 @@
 			[query setObject:self.comment forKey:(__bridge id)kSecAttrComment];
 		}
 #ifdef SSKEYCHAIN_ACCESSIBLE_AVAILABLE
-		CFTypeRef accessibilityType = self.accessibilityType ?: [SSKeychain accessibilityType];
+		CFTypeRef accessibilityType = self.accessibilityType ?: [SAMKeychain accessibilityType];
 		
 		if (accessibilityType) {
 			[query setObject:(__bridge id)accessibilityType forKey:(__bridge id)kSecAttrAccessible];
@@ -59,7 +59,7 @@
 		}
 		[query setObject:self.passwordData forKey:(__bridge id)kSecValueData];
 #if SSKEYCHAIN_ACCESSIBLE_AVAILABLE
-		CFTypeRef accessibilityType = self.accessibilityType ?: [SSKeychain accessibilityType];
+		CFTypeRef accessibilityType = self.accessibilityType ?: [SAMKeychain accessibilityType];
 		if (accessibilityType) {
 			[query setObject:(__bridge id)accessibilityType forKey:(__bridge id)kSecAttrAccessible];
 		}
@@ -117,7 +117,7 @@
 	[query setObject:(__bridge id)kSecMatchLimitAll forKey:(__bridge id)kSecMatchLimit];
 
 #if SSKEYCHAIN_ACCESSIBLE_AVAILABLE
-	CFTypeRef accessibilityType = self.accessibilityType ?: [SSKeychain accessibilityType];
+	CFTypeRef accessibilityType = self.accessibilityType ?: [SAMKeychain accessibilityType];
 	
 	if (accessibilityType) {
 		[query setObject:(__bridge id)accessibilityType forKey:(__bridge id)kSecAttrAccessible];

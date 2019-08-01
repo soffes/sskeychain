@@ -52,7 +52,7 @@ typedef NS_ENUM(NSUInteger, SAMKeychainQuerySynchronizationMode) {
 #ifdef SSKEYCHAIN_ACCESSIBLE_AVAILABLE
 /**
  kSecAttrAccessible
- Sets the accessibility type for an individual item. If set, this overrides +[SSKeychain accessibilityType].
+ Sets the accessibility type for an individual item. If set, this overrides +[SAMKeychain accessibilityType].
  */
 @property (nonatomic, copy) __attribute__((NSObject)) CFTypeRef accessibilityType;
 #endif

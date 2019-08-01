@@ -12,6 +12,8 @@
 	#import <Foundation/Foundation.h>
 #endif
 
+#import <SAMKeychain/SAMKeychainQuery.h>
+
 NS_ASSUME_NONNULL_BEGIN
 
 /**
@@ -200,4 +202,3 @@ extern NSString *const kSAMKeychainWhereKey;
 
 NS_ASSUME_NONNULL_END
 
-#import <SAMKeychain/SAMKeychainQuery.h>
